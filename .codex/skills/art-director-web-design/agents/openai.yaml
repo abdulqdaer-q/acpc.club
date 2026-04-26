@@ -1,0 +1,7 @@
+interface:
+  display_name: "Art Director Web Design"
+  short_description: "Storytelling sponsor-ready web design"
+  default_prompt: "Use $art-director-web-design to design or implement a premium website with strong storytelling, preserved brand identity, sponsor clarity, and production-grade front-end quality."
+
+policy:
+  allow_implicit_invocation: true

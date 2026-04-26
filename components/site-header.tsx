@@ -20,7 +20,6 @@ export function SiteHeader({ locale, settings }: SiteHeaderProps) {
   const homePath = localizedPath(locale, "home");
   const isHome = pathname === homePath;
   const [isOverlay, setIsOverlay] = useState(isHome);
-  const showNavigation = !isHome || !isOverlay;
 
   useEffect(() => {
     if (!isHome) {
@@ -53,27 +52,25 @@ export function SiteHeader({ locale, settings }: SiteHeaderProps) {
         </Link>
 
         <div className="header-actions">
-          {showNavigation ? (
-            <nav className="nav" aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary"}>
-              {navigation.map((item) => (
-                <Link
-                  key={item.slug}
-                  className="nav-link"
-                  href={item.href}
-                  data-active={
-                    pathname === item.href ||
-                    (item.slug !== "home" && pathname.startsWith(`${item.href}/`))
-                  }
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          ) : null}
+          <nav className="nav" aria-label={locale === "ar" ? "التنقل الرئيسي" : "Primary"}>
+            {navigation.map((item) => (
+              <Link
+                key={item.slug}
+                className="nav-link"
+                href={item.href}
+                data-active={
+                  pathname === item.href ||
+                  (item.slug !== "home" && pathname.startsWith(`${item.href}/`))
+                }
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
           <div className="header-cta">
             <Link className="header-link" href={localizedPath(locale, "sponsors")}>
-              {locale === "ar" ? "كن شريكاً مع Aleppo CPC" : "Partner with Aleppo CPC"}
+              {locale === "ar" ? "كن راعياً" : "Become a Sponsor"}
             </Link>
             <LanguageSwitcher locale={locale} />
           </div>

@@ -1,0 +1,30 @@
+<svg width="860" height="620" viewBox="0 0 860 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="aleppoLand" x1="302" y1="146" x2="633" y2="472" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A3137"/>
+      <stop offset="1" stop-color="#1C2126"/>
+    </linearGradient>
+    <radialGradient id="aleppoGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(489 244) rotate(90) scale(118 118)">
+      <stop stop-color="#D8AB55" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#D8AB55" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <g opacity="0.75">
+    <path d="M355 242L369 210L405 184L455 150L519 143L575 164L620 201L611 238L632 278L616 330L595 357L603 397L554 430L523 468L469 451L437 420L388 418L353 377L360 328L338 292L355 242Z" fill="url(#aleppoLand)" stroke="#6B706F" stroke-width="2.25"/>
+    <path d="M369 210L388 228L430 235L471 215L514 216L554 196L587 212" stroke="#7A7F7E" stroke-opacity="0.55" stroke-width="1.25"/>
+    <path d="M366 256L409 277L460 268L509 247L545 259L587 245" stroke="#7A7F7E" stroke-opacity="0.42" stroke-width="1.25"/>
+    <path d="M369 316L407 329L444 320L484 337L532 320L575 331" stroke="#7A7F7E" stroke-opacity="0.42" stroke-width="1.25"/>
+    <path d="M392 377L431 392L486 387L520 365L565 369" stroke="#7A7F7E" stroke-opacity="0.35" stroke-width="1.25"/>
+  </g>
+
+  <g opacity="0.85">
+    <path d="M172 331L196 302L230 292L267 299L293 325L296 361L278 392L244 408L208 398L184 369L172 331Z" fill="#1B2024" stroke="#5A5F64" stroke-width="1.75"/>
+    <path d="M189 313L188 391M214 301L214 402M238 295L238 404M262 300L262 397" stroke="#4D5257" stroke-width="1"/>
+    <path d="M179 329H291M182 349H294M186 369H287" stroke="#4D5257" stroke-width="1"/>
+    <path d="M165 338C249 315 331 286 488 244" stroke="#5A5F64" stroke-opacity="0.55" stroke-width="1.35" stroke-dasharray="7 10"/>
+  </g>
+
+  <circle cx="489" cy="244" r="96" fill="url(#aleppoGlow)"/>
+  <circle cx="489" cy="244" r="8" fill="#D8AB55" fill-opacity="0.28"/>
+</svg>

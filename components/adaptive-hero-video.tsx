@@ -78,7 +78,6 @@ export function AdaptiveHeroCover({
 
       <div className="hero-cover-inner">
         <div className="hero-cover-panel">
-          {hero.eyebrow ? <span className="eyebrow">{hero.eyebrow}</span> : null}
           <h1>{hero.title}</h1>
           <p className="hero-text hero-cover-text">{hero.description}</p>
 

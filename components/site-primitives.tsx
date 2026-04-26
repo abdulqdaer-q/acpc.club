@@ -22,9 +22,6 @@ export function PageHero({
       <div className="shell page-hero-inner">
         <div className="hero">
           <div className="hero-main">
-            <div className="page-hero-meta">
-              {hero.eyebrow ? <span className="eyebrow">{hero.eyebrow}</span> : null}
-            </div>
             <h1>{hero.title}</h1>
             <p className="hero-text">{hero.description}</p>
             <div className="cta-row">
@@ -44,7 +41,7 @@ export function PageHero({
 }
 
 export function SectionHead({
-  kicker,
+  kicker: _kicker,
   title,
   description
 }: {
@@ -55,7 +52,6 @@ export function SectionHead({
   return (
     <div className="section-head">
       <div>
-        <p className="section-kicker">{kicker}</p>
         <h2>{title}</h2>
       </div>
       {description ? <p className="section-copy section-head-copy">{description}</p> : null}
@@ -115,7 +111,6 @@ export function ContactPanel({
     <section className="section">
       <div className="contact-panel">
         <div className="contact-copy-block">
-          <p className="section-kicker">{locale === "ar" ? "التواصل" : "Contact"}</p>
           <h2>
             {locale === "ar"
               ? "للتواصل الرسمي والشراكات."
@@ -138,10 +133,10 @@ export function ContactPanel({
 
         <div className="contact-meta">
           <article className="contact-card">
-            <p className="contact-card-label">
-              {locale === "ar" ? "البريد الرسمي" : "Official email"}
-            </p>
-            <h3>{settings.email}</h3>
+            <h3>{locale === "ar" ? "البريد الرسمي" : "Official email"}</h3>
+            <Link className="contact-value" href={`mailto:${settings.email}`}>
+              {settings.email}
+            </Link>
             <p className="item-copy">
               {locale === "ar"
                 ? "للمراسلات الرسمية والشراكات والطلبات الإعلامية."
@@ -150,8 +145,8 @@ export function ContactPanel({
           </article>
 
           <article className="contact-card">
-            <p className="contact-card-label">{locale === "ar" ? "الموقع" : "Location"}</p>
-            <h3>{settings.location}</h3>
+            <h3>{locale === "ar" ? "الموقع" : "Location"}</h3>
+            <p className="contact-value">{settings.location}</p>
             <p className="item-copy">
               {locale === "ar"
                 ? "جامعة حلب والمجتمع التقني المحيط بها."

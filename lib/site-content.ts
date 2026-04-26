@@ -233,7 +233,7 @@ const defaults: Record<
         eyebrow: "",
         title: "Aleppo Competitive Programming Club",
         description:
-          "The official competitive programming club at the University of Aleppo for ICPC training, contests, achievements, and strategic partnerships.",
+          "The University of Aleppo club for ICPC training, contests, and technical partnerships.",
         primaryCta: {
           label: "Sponsor Aleppo CPC",
           href: "/en/sponsors"
@@ -761,7 +761,7 @@ const defaults: Record<
         eyebrow: "",
         title: "نادي حلب للبرمجة التنافسية",
         description:
-          "المنصة الرسمية للبرمجة التنافسية في جامعة حلب للتدريب على ICPC، والمسابقات، والإنجازات، والشراكات الداعمة.",
+          "نادي جامعة حلب للتدريب على ICPC، والمسابقات، والشراكات التقنية الداعمة.",
         primaryCta: {
           label: "كن شريكاً مع Aleppo CPC",
           href: "/ar/sponsors"

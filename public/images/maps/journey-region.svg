@@ -1,0 +1,21 @@
+<svg width="860" height="620" viewBox="0 0 860 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="northAfricaFill" x1="125" y1="222" x2="420" y2="454" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A3137"/>
+      <stop offset="1" stop-color="#1F252A"/>
+    </linearGradient>
+    <linearGradient id="arabiaFill" x1="430" y1="196" x2="705" y2="468" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#343B40"/>
+      <stop offset="1" stop-color="#23292E"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M160 248L205 217L274 207L340 221L392 247L433 289L426 321L389 332L344 325L303 336L251 332L201 308L167 277L160 248Z" fill="url(#northAfricaFill)" stroke="#68706F" stroke-width="2"/>
+  <path d="M189 309L213 357L255 388L306 392L356 384L398 397L442 392L468 423L448 462L394 479L322 471L260 441L218 401L174 359L146 316L189 309Z" fill="#22282D" stroke="#68706F" stroke-width="2"/>
+  <path d="M421 214L456 200L501 208L533 232L548 260L573 272L600 318L611 364L655 390L708 383L739 410L728 447L678 460L624 452L584 429L542 425L505 400L487 360L461 338L436 312L421 214Z" fill="url(#arabiaFill)" stroke="#7E847D" stroke-width="2.1"/>
+  <path d="M420 193L447 171L494 164L541 176L573 202L599 214L624 233L618 255L585 260L552 248L513 236L473 230L440 228L420 193Z" fill="#1E2428" stroke="#68706F" stroke-width="1.8"/>
+  <path d="M420 248L447 256L471 246L495 251L522 272L551 291" stroke="#818878" stroke-opacity="0.55" stroke-width="1.25"/>
+  <path d="M490 334L548 351L598 350L645 373L683 387" stroke="#818878" stroke-opacity="0.42" stroke-width="1.25"/>
+  <path d="M256 394L306 414L356 418L398 433" stroke="#818878" stroke-opacity="0.38" stroke-width="1.25"/>
+  <circle cx="430" cy="246" r="74" fill="#D8AB55" fill-opacity="0.11"/>
+</svg>
