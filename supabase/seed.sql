@@ -12,13 +12,15 @@ insert into public.site_settings (
   whatsapp_label_ar,
   whatsapp_value,
   email,
+  instagram_url,
+  linkedin_url,
   is_active
 )
 values (
   'Aleppo CPC',
   'Aleppo CPC',
   'The official home of competitive programming at the University of Aleppo.',
-  'المنصة الرسمية للبرمجة التنافسية في جامعة حلب.',
+  'النادي الرسمي للبرمجة التنافسية في جامعة حلب.',
   'Aleppo, Syria',
   'حلب، سوريا',
   'Official coordination',
@@ -28,6 +30,8 @@ values (
   'واتساب',
   '+971 54 700 1658',
   'hello@acpc.club',
+  'https://www.instagram.com/aleppo_cpc25/',
+  'https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true',
   true
 )
 on conflict do nothing;
@@ -38,15 +42,15 @@ values
     'home',
     'en',
     'Aleppo CPC | Competitive Programming Club at the University of Aleppo',
-    'Aleppo Competitive Programming Club is the official competitive programming platform at the University of Aleppo for ICPC training, contests, achievements, and sponsor partnerships.',
+    'Aleppo Competitive Programming Club prepares University of Aleppo students for ICPC through disciplined training, serious contests, mentorship, and partner support.',
     array['Aleppo CPC', 'University of Aleppo competitive programming club', 'University of Aleppo ICPC'],
     $$
     {
       "hero": {
         "eyebrow": "",
         "title": "Aleppo Competitive Programming Club",
-        "description": "The official competitive programming club at the University of Aleppo for ICPC training, contests, achievements, and strategic partnerships.",
-        "primaryCta": { "label": "Sponsor Aleppo CPC", "href": "/en/sponsors" },
+        "description": "The University of Aleppo club preparing students for ICPC through disciplined training, serious contests, mentorship, and partnerships that help talent go further.",
+        "primaryCta": { "label": "Partner with Aleppo CPC", "href": "/en/sponsors" },
         "secondaryCta": { "label": "Explore the ICPC pathway", "href": "/en/competition" }
       }
     }
@@ -57,14 +61,14 @@ values
     'home',
     'ar',
     'Aleppo CPC | نادي البرمجة التنافسية في جامعة حلب',
-    'Aleppo CPC هو المنصة الرسمية للبرمجة التنافسية في جامعة حلب للتدريب على ICPC، والمسابقات، والإنجازات، والشراكات الداعمة.',
+    'Aleppo CPC هو نادي جامعة حلب الذي يهيئ الطلاب لمسار ICPC عبر تدريب منظم ومسابقات جادة وإرشاد وشراكات داعمة.',
     array['Aleppo CPC', 'نادي البرمجة التنافسية جامعة حلب', 'جامعة حلب ICPC'],
     $$
     {
       "hero": {
         "eyebrow": "",
         "title": "نادي حلب للبرمجة التنافسية",
-        "description": "المنصة الرسمية للبرمجة التنافسية في جامعة حلب للتدريب على ICPC، والمسابقات، والإنجازات، والشراكات الداعمة.",
+        "description": "نادي جامعة حلب الذي يهيئ الطلاب لمسار ICPC عبر تدريب منظم، ومسابقات جادة، وإرشاد فعلي، وشراكات تدفع المواهب إلى مدى أبعد.",
         "primaryCta": { "label": "كن شريكاً مع Aleppo CPC", "href": "/ar/sponsors" },
         "secondaryCta": { "label": "استكشف مسار ICPC", "href": "/ar/competition" }
       }
@@ -76,16 +80,16 @@ values
     'sponsors',
     'en',
     'Sponsors and Partnerships | Aleppo CPC',
-    'Partner with Aleppo CPC to support competitive programming at the University of Aleppo and reach a visible community of high-potential technical talent.',
+    'Partner with Aleppo CPC to support competitive programming at the University of Aleppo and reach a visible club of high-potential technical talent.',
     array['Aleppo CPC sponsors', 'ICPC sponsorship', 'support competitive programming'],
     $$
     {
       "hero": {
-        "eyebrow": "Sponsors",
-        "title": "A partnership platform built on talent, visibility, and educational impact.",
-        "description": "Aleppo CPC offers partners a credible way to support student excellence, gain meaningful visibility, and align with a respected university competition community.",
-        "primaryCta": { "label": "Start a partnership conversation", "href": "https://wa.me/971547001658" },
-        "secondaryCta": { "label": "See event operations", "href": "/en/events" }
+        "eyebrow": "Partnerships",
+        "title": "Partner with the club developing Aleppo's next ICPC teams.",
+        "description": "Aleppo CPC gives sponsors a credible way to support student excellence, strengthen technical education, and appear across a serious university competition season.",
+        "primaryCta": { "label": "Start a Partnership Conversation", "href": "https://wa.me/971547001658" },
+        "secondaryCta": { "label": "See the club structure", "href": "/en/structure" }
       }
     }
     $$::jsonb,
@@ -95,16 +99,16 @@ values
     'sponsors',
     'ar',
     'الرعاة والشراكات | Aleppo CPC',
-    'شارك مع Aleppo CPC لدعم البرمجة التنافسية في جامعة حلب والوصول إلى مجتمع واضح من المواهب التقنية الواعدة.',
+    'شارك مع Aleppo CPC لدعم البرمجة التنافسية في جامعة حلب والوصول إلى نادٍ واضح من المواهب التقنية الواعدة.',
     array['رعاة Aleppo CPC', 'رعاية ICPC', 'دعم البرمجة التنافسية'],
     $$
     {
       "hero": {
-        "eyebrow": "الرعاة",
-        "title": "منصة شراكة قائمة على المواهب، والظهور، والأثر التعليمي.",
-        "description": "يوفر Aleppo CPC للشركاء طريقة موثوقة لدعم التميز الطلابي، والحصول على حضور واضح، والارتباط بمجتمع جامعي يحظى باحترام ونتائج موثقة.",
+        "eyebrow": "الشراكات",
+        "title": "شاركوا النادي الذي يصنع فرق ICPC القادمة من حلب.",
+        "description": "يمنح Aleppo CPC الرعاة طريقاً موثوقاً لدعم التميز الطلابي، وتعزيز التعليم التقني، والظهور ضمن موسم جامعي تنافسي جاد.",
         "primaryCta": { "label": "ابدأ محادثة شراكة", "href": "https://wa.me/971547001658" },
-        "secondaryCta": { "label": "شاهد العمليات", "href": "/ar/events" }
+        "secondaryCta": { "label": "شاهد هيكل النادي", "href": "/ar/structure" }
       }
     }
     $$::jsonb,

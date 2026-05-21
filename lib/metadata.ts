@@ -10,7 +10,15 @@ export function absoluteUrl(path: string) {
 
 export function buildMetadata(input: {
   locale: Locale;
-  slug: "home" | "about" | "competition" | "achievements" | "events" | "sponsors";
+  slug:
+    | "home"
+    | "about"
+    | "structure"
+    | "competition"
+    | "achievements"
+    | "events"
+    | "volunteers"
+    | "sponsors";
   title: string;
   description: string;
   keywords?: string[];

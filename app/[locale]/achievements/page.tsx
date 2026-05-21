@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import {
-  ContactPanel,
-  PageHero,
-  SectionHead
-} from "@/components/site-primitives";
+import { StaticHeroCover } from "@/components/adaptive-hero-video";
+import { ContactPanel, SectionHead } from "@/components/site-primitives";
 import { buildMetadata } from "@/lib/metadata";
 import { isLocale, type Locale } from "@/lib/i18n";
 import {
@@ -98,7 +95,7 @@ export default async function AchievementsPage({ params }: PageProps) {
             year: "2021",
             title: "World Finals in Dhaka",
             description:
-              "This record shows that the chapter does not stop at local training. It reaches the international stage.",
+              "This record shows that the club does not stop at local training. It reaches the international stage.",
             src: "/images/icpc-teams/2021.jpg"
           },
           {
@@ -112,27 +109,15 @@ export default async function AchievementsPage({ params }: PageProps) {
 
   return (
     <>
-      <PageHero
+      <StaticHeroCover
+        alt={
+          currentLocale === "ar"
+            ? "فريق جامعة حلب في نهائيات ICPC العالمية"
+            : "University of Aleppo team at the ICPC World Finals"
+        }
         hero={content.hero}
         locale={currentLocale}
-        side={
-          <div className="proof-card">
-            <p className="section-kicker">{currentLocale === "ar" ? "الأثر" : "Impact"}</p>
-            <h3>
-              {currentLocale === "ar"
-                ? "المؤشرات هنا، وأرشيف الفرق داخل الصفحة."
-                : "Metrics stay here. The team archive belongs in the page."}
-            </h3>
-            <div className="mini-grid">
-              {content.impactMetrics.map((item) => (
-                <div className="stat-card" key={item.label}>
-                  <div className="stat-value mono">{item.value}</div>
-                  <div className="stat-label">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        }
+        posterSrc="/images/icpc-teams/2023.jpg"
       />
 
       <section className="section">
@@ -144,6 +129,14 @@ export default async function AchievementsPage({ params }: PageProps) {
               : "These team images say more than a generic achievements summary ever could."
           }
         />
+        <div className="mini-grid section-compact">
+          {content.impactMetrics.map((item) => (
+            <div className="stat-card" key={item.label}>
+              <div className="stat-value mono">{item.value}</div>
+              <div className="stat-label">{item.label}</div>
+            </div>
+          ))}
+        </div>
         <div className="achievement-photo-grid">
           {icpcGallery.map((item) => (
             <article className="achievement-photo-card" key={item.year}>

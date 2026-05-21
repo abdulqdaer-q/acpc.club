@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 
+import { RouteTransitionProvider } from "@/components/route-transition-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { isLocale, isRtl, locales } from "@/lib/i18n";
@@ -30,6 +31,7 @@ export default async function LocaleLayout({
   return (
     <div className="locale-root" lang={locale} dir={isRtl(locale) ? "rtl" : "ltr"} data-dir={isRtl(locale) ? "rtl" : "ltr"}>
       <div className="site-frame">
+        <RouteTransitionProvider />
         <SiteHeader locale={locale} settings={settings} />
         <main className="shell page">{children}</main>
         <SiteFooter locale={locale} settings={settings} />

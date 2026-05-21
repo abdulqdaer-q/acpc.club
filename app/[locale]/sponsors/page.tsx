@@ -2,12 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import {
-  ContactPanel,
-  EditorialPhoto,
-  PageHero,
-  SectionHead
-} from "@/components/site-primitives";
+import { StaticHeroCover } from "@/components/adaptive-hero-video";
+import { ContactPanel, SectionHead } from "@/components/site-primitives";
 import { buildMetadata } from "@/lib/metadata";
 import { isLocale, type Locale } from "@/lib/i18n";
 import {
@@ -84,54 +80,9 @@ export default async function SponsorsPage({ params }: PageProps) {
 
   return (
     <>
-      <PageHero
+      <StaticHeroCover
         hero={content.hero}
         locale={currentLocale}
-        side={
-          <div className="proof-card">
-            <EditorialPhoto
-              alt={
-                currentLocale === "ar"
-                  ? "فريق Aleppo CPC على منصة إقليمية ضمن مشهد تكريم رسمي"
-                  : "Aleppo CPC on a regional stage during an official recognition moment"
-              }
-              description={
-                currentLocale === "ar"
-                  ? "الشراكات الأقوى ترتبط بمجتمع يملك حضوراً عاماً ونتائج يمكن عرضها بثقة."
-                  : "The strongest partnerships attach to communities with visible public presence and results that can be presented with confidence."
-              }
-              priority
-              src="/images/acpc-photos/sponsors-stage.jpg"
-              title={
-                currentLocale === "ar"
-                  ? "حضور يمكن للشريك أن يرتبط به."
-                  : "Visibility a partner can stand behind."
-              }
-            />
-            <p className="section-kicker">
-              {currentLocale === "ar" ? "تواصل الشراكة" : "Partnership Contact"}
-            </p>
-            <h3>
-              {currentLocale === "ar"
-                ? "استخدموا قناة التواصل الرسمية لبحث نطاق الرعاية والظهور وأهداف الشراكة."
-                : "Use the official contact channel to discuss sponsorship scope, visibility, and partnership goals."}
-            </h3>
-            <div className="section-actions">
-              <Link
-                className="button button-secondary button-compact"
-                href="https://wa.me/971547001658"
-              >
-                {currentLocale === "ar" ? "راسل الفريق عبر واتساب" : "WhatsApp the Team"}
-              </Link>
-              <Link
-                className="button button-secondary button-compact"
-                href={`mailto:${settings.email}`}
-              >
-                {currentLocale === "ar" ? "راسل النادي عبر البريد" : "Email the Club"}
-              </Link>
-            </div>
-          </div>
-        }
       />
 
       <section className="section">

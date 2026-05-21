@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ContactPanel, PageHero, SectionHead } from "@/components/site-primitives";
+import { HomeSlideDeck } from "@/components/home-slide-deck";
+import {
+  JourneyChapterSlide,
+  JourneyProgressRail,
+  JourneyStoryIntro
+} from "@/components/journey-section";
+import { ContactPanel, SectionHead } from "@/components/site-primitives";
 import { buildMetadata } from "@/lib/metadata";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { getJourneyContent } from "@/lib/journey-content";
 import { getCompetitionContent, getSiteSettings } from "@/lib/site-content";
 
 type PageProps = {
@@ -40,6 +47,7 @@ export default async function CompetitionPage({ params }: PageProps) {
     getSiteSettings(currentLocale),
     getCompetitionContent(currentLocale)
   ]);
+  const journeyContent = getJourneyContent(currentLocale);
 
   const trainingRoadmap =
     currentLocale === "ar"
@@ -74,7 +82,7 @@ export default async function CompetitionPage({ params }: PageProps) {
           {
             title: "Regular problem sets",
             description:
-              "A healthy chapter gives students a visible path from easier problems to more demanding competitive material."
+              "A healthy club gives students a visible path from easier problems to more demanding competitive material."
           },
           {
             title: "Mock contests and rehearsal",
@@ -90,129 +98,117 @@ export default async function CompetitionPage({ params }: PageProps) {
 
   return (
     <>
-      <PageHero
-        hero={content.hero}
-        locale={currentLocale}
-        side={
-          <div className="proof-card">
-            <p className="section-kicker">{currentLocale === "ar" ? "الصيغة" : "Format"}</p>
-            <h3>
-              {currentLocale === "ar"
-                ? "ثلاثة طلاب، جهاز واحد، خمس ساعات، ومجموعة مسائل تقيس العمق والسرعة والعمل الجماعي."
-                : "Three students, one machine, five hours, and a problem set that rewards depth, speed, and teamwork."}
-            </h3>
-            <div className="mini-grid">
-              <div className="stat-card">
-                <div className="stat-value mono">3</div>
-                <div className="stat-label">
-                  {currentLocale === "ar" ? "طلاب في كل فريق" : "students per team"}
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-value mono">5h</div>
-                <div className="stat-label">
-                  {currentLocale === "ar" ? "مدة الجولة الرسمية" : "official contest duration"}
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-value mono">1</div>
-                <div className="stat-label">
-                  {currentLocale === "ar" ? "جهاز لكل فريق" : "machine per team"}
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-value mono">8-12</div>
-                <div className="stat-label">
-                  {currentLocale === "ar" ? "مسائل تقريباً" : "problems typically"}
-                </div>
-              </div>
-            </div>
-          </div>
+      <HomeSlideDeck
+        overlay={
+          <JourneyProgressRail
+            items={journeyContent.levels.map((level, index) => ({
+              label: level.levelLabel,
+              slideIndex: index + 1
+            }))}
+          />
         }
-      />
-
-      <section className="section">
-        <SectionHead
-          kicker={currentLocale === "ar" ? "مراحل المسابقة" : "Structure"}
-          title={
-            currentLocale === "ar"
-              ? "يجب أن يكون المسار واضحاً لكل طالب ومدرب."
-              : "The pathway should be clear to every student and coach."
-          }
-        />
-        <div className="flow-grid">
-          {content.structure.map((item, index) => (
-            <article className="timeline-item" key={item.title}>
-              <span className="timeline-index mono">{String(index + 1).padStart(2, "0")}</span>
-              <h3>{item.title}</h3>
-              <p className="item-copy">{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="panel">
-          <p className="section-kicker">
-            {currentLocale === "ar" ? "لماذا ينجح هذا النموذج" : "Why this format works"}
-          </p>
-          {content.sections.map((section) => (
-            <div className="section-stack" key={section.title}>
-              <h3>{section.title}</h3>
-              {section.body.map((paragraph) => (
-                <p className="item-copy" key={paragraph}>
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <SectionHead
-          kicker={currentLocale === "ar" ? "آلية اليومين" : "Event Flow"}
-          title={
-            currentLocale === "ar"
-              ? "يساعد هذا التسلسل المختصر الفرق والمدربين على فهم يوم المسابقة بسرعة."
-              : "A readable contest-day sequence helps teams and coaches prepare well."
-          }
-        />
-        <div className="panel">
-          <div className="timeline-stack">
-            {content.eventFlow.map((item, index) => (
-              <article className="timeline-inline" key={item.title}>
-                <span className="timeline-index mono">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p className="item-copy">{item.description}</p>
+        slides={[
+          {
+            id: "competition-journey-intro",
+            content: (
+              <section className="home-slide-panel home-slide-panel-journey">
+                <div className="shell">
+                  <JourneyStoryIntro
+                    intro={journeyContent.intro}
+                    levels={journeyContent.levels}
+                    title={journeyContent.title}
+                  />
                 </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <SectionHead
-          kicker={currentLocale === "ar" ? "التحضير" : "Preparation"}
-          title={
-            currentLocale === "ar"
-              ? "يبدأ التحضير الحقيقي قبل التأهل وقبل تشكيل الفرق النهائية."
-              : "Serious preparation begins well before qualification and final team selection."
+              </section>
+            )
+          },
+          ...journeyContent.levels.map((level, index) => ({
+            id: `competition-journey-${level.id}`,
+            content: (
+              <section className="home-slide-panel home-slide-panel-journey" key={level.id}>
+                <div className="shell">
+                  <JourneyChapterSlide
+                    index={index}
+                    level={level}
+                    total={journeyContent.levels.length}
+                  />
+                </div>
+              </section>
+            )
+          })),
+          {
+            id: "competition-event-flow",
+            content: (
+              <section className="home-slide-panel">
+                <div className="shell">
+                  <section className="section section-compact">
+                    <SectionHead
+                      kicker={currentLocale === "ar" ? "آلية اليومين" : "Event Flow"}
+                      title={
+                        currentLocale === "ar"
+                          ? "يساعد هذا التسلسل المختصر الفرق والمدربين على فهم يوم المسابقة بسرعة."
+                          : "A readable contest-day sequence helps teams and coaches prepare well."
+                      }
+                    />
+                    <div className="panel">
+                      <div className="timeline-stack">
+                        {content.eventFlow.map((item, index) => (
+                          <article className="timeline-inline" key={item.title}>
+                            <span className="timeline-index mono">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <div>
+                              <h3>{item.title}</h3>
+                              <p className="item-copy">{item.description}</p>
+                            </div>
+                          </article>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </section>
+            )
+          },
+          {
+            id: "competition-preparation",
+            content: (
+              <section className="home-slide-panel">
+                <div className="shell">
+                  <section className="section section-compact">
+                    <SectionHead
+                      kicker={currentLocale === "ar" ? "التحضير" : "Preparation"}
+                      title={
+                        currentLocale === "ar"
+                          ? "يبدأ التحضير الحقيقي قبل التأهل وقبل تشكيل الفرق النهائية."
+                          : "Serious preparation begins well before qualification and final team selection."
+                      }
+                    />
+                    <div className="card-grid card-grid-4">
+                      {trainingRoadmap.map((item) => (
+                        <article className="feature-card" key={item.title}>
+                          <h3>{item.title}</h3>
+                          <p className="item-copy">{item.description}</p>
+                        </article>
+                      ))}
+                    </div>
+                  </section>
+                </div>
+              </section>
+            )
+          },
+          {
+            id: "competition-contact",
+            content: (
+              <section className="home-slide-panel home-slide-panel-contact">
+                <div className="shell">
+                  <ContactPanel locale={currentLocale} settings={settings} />
+                </div>
+              </section>
+            )
           }
-        />
-        <div className="card-grid card-grid-4">
-          {trainingRoadmap.map((item) => (
-            <article className="feature-card" key={item.title}>
-              <h3>{item.title}</h3>
-              <p className="item-copy">{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <ContactPanel locale={currentLocale} settings={settings} />
+        ]}
+      />
     </>
   );
 }

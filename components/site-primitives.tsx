@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,16 +8,23 @@ import { HeroBlock, SiteSettings } from "@/lib/site-content";
 export function PageHero({
   hero,
   side,
-  locale
+  locale,
+  backgroundImage
 }: {
   hero: HeroBlock;
   side?: ReactNode;
   locale: Locale;
+  backgroundImage?: string;
 }) {
   return (
     <section
       aria-label={locale === "ar" ? "مقدمة الصفحة" : "Page introduction"}
       className="page-hero"
+      style={
+        backgroundImage
+          ? ({ "--page-hero-image": `url("${backgroundImage}")` } as CSSProperties)
+          : undefined
+      }
     >
       <div className="shell page-hero-inner">
         <div className="hero">
@@ -33,7 +40,7 @@ export function PageHero({
               </Link>
             </div>
           </div>
-          {side ? <aside className="hero-side">{side}</aside> : null}
+          {side ? <div className="hero-side">{side}</div> : null}
         </div>
       </div>
     </section>
@@ -113,13 +120,13 @@ export function ContactPanel({
         <div className="contact-copy-block">
           <h2>
             {locale === "ar"
-              ? "للتواصل الرسمي والشراكات."
-              : "Official contact for partnerships and inquiries."}
+              ? "تواصل رسمي للشراكات والطلاب والإعلام."
+              : "Official contact for partnerships, students, and media."}
           </h2>
           <p className="section-copy">
             {locale === "ar"
-              ? "للاستفسارات المتعلقة بالرعاية والتنسيق الجامعي والتغطية الإعلامية والتواصل الرسمي مع Aleppo CPC، استخدموا القنوات التالية."
-              : "For sponsorships, university coordination, media requests, and official communication with Aleppo CPC, use the channels below."}
+              ? "للاستفسارات المتعلقة بالرعاية، وتنسيق الطلاب، والتواصل الجامعي، والطلبات الإعلامية، تواصلوا مع Aleppo CPC عبر القنوات الرسمية أدناه."
+              : "For sponsorships, student coordination, university communication, and media requests, contact Aleppo CPC through the official channels below."}
           </p>
         </div>
         <div className="contact-actions">
@@ -127,7 +134,7 @@ export function ContactPanel({
             {locale === "ar" ? "راسل النادي عبر البريد" : "Email the Club"}
           </Link>
           <Link className="button button-secondary" href="https://wa.me/971547001658">
-            {locale === "ar" ? "راسل الفريق عبر واتساب" : "WhatsApp the Team"}
+            {locale === "ar" ? "راسل النادي عبر واتساب" : "WhatsApp the Club"}
           </Link>
         </div>
 
@@ -149,8 +156,8 @@ export function ContactPanel({
             <p className="contact-value">{settings.location}</p>
             <p className="item-copy">
               {locale === "ar"
-                ? "جامعة حلب والمجتمع التقني المحيط بها."
-                : "University of Aleppo and the surrounding technical community."}
+                ? "جامعة حلب والمشهد التقني المحيط بها."
+                : "University of Aleppo and the surrounding technical scene."}
             </p>
           </article>
         </div>

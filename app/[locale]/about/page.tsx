@@ -1,14 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import {
-  ContactPanel,
-  EditorialPhoto,
-  PageHero,
-  SectionHead
-} from "@/components/site-primitives";
+import { StaticHeroCover } from "@/components/adaptive-hero-video";
+import { ContactPanel, SectionHead } from "@/components/site-primitives";
 import { buildMetadata } from "@/lib/metadata";
 import { isLocale, localizedPath, type Locale } from "@/lib/i18n";
 import { getAboutContent, getSiteSettings } from "@/lib/site-content";
@@ -48,37 +43,37 @@ export default async function AboutPage({ params }: PageProps) {
     getAboutContent(currentLocale)
   ]);
 
-  const chapterTracks =
+  const clubTracks =
     currentLocale === "ar"
       ? [
           {
             title: "التدريب",
             description:
-              "جلسات تدريبية ومجموعات مسائل ومسارات تعلم تمنح الطلاب بداية عملية منتظمة في البرمجة التنافسية."
+              "جلسات منتظمة ومجموعات مسائل ومسارات تعلم تمنح الطالب بداية واضحة وقابلة للتطور في البرمجة التنافسية."
           },
           {
             title: "المسابقة",
-            description: "الاستعداد للمسابقات المحلية ودعم التقدم إلى المراحل السورية ثم الإقليمية."
+            description: "الاستعداد للمسابقات المحلية ودعم الانتقال إلى المستوى السوري ثم الإقليمي بخطوات مفهومة."
           },
           {
             title: "الإعلام والتوثيق",
-            description: "إدارة الهوية البصرية والنشر وأرشفة النشاط والإنجازات بصيغة مؤسسية واضحة."
+            description: "إدارة الهوية البصرية والنشر وأرشفة النشاط والإنجازات بلغة عامة واضحة ومستمرة."
           },
           {
             title: "العمليات واللوجستيك",
-            description: "تنسيق القاعات والتسجيل والدعم الميداني والتجهيزات التشغيلية والتقنية."
+            description: "تنسيق القاعات والتسجيل والدعم الميداني والتجهيزات التقنية حتى يبقى الموسم قابلاً للتنفيذ."
           }
         ]
       : [
           {
             title: "Training",
             description:
-              "Training sessions, topic notes, and problem sets create a dependable entry path into competitive programming."
+              "Regular sessions, problem sets, and learning tracks give students a clear way into competitive programming."
           },
           {
             title: "Competition",
             description:
-              "The club prepares local contests and supports progress toward Syrian and regional stages."
+              "The club prepares local contests and supports progression toward Syrian and regional stages."
           },
           {
             title: "Media and documentation",
@@ -88,77 +83,29 @@ export default async function AboutPage({ params }: PageProps) {
           {
             title: "Operations and logistics",
             description:
-              "Venue setup, registration, on-ground coordination, and technical support keep the season moving."
+              "Venue setup, registration, on-ground coordination, and technical support keep the season executable."
           }
         ];
 
   const valuePoints =
     currentLocale === "ar"
       ? [
-          "ترتبط المهارة التقنية هنا بالانضباط والعمل الجماعي والتواصل تحت الضغط.",
-          "يساعد الأرشيف الواضح الطلاب الجدد على فهم المسار بصورة واقعية ومقنعة.",
-          "تقلل المنصة الرسمية الاعتماد على الرسائل المتفرقة والملفات غير المنظمة."
+          "يجب أن يرى الطالب المسار بوضوح، لا أن يكتشفه بالصدفة.",
+          "يحتاج الشريك والجامعة إلى مرجع رسمي ثابت، لا إلى ملفات ورسائل متفرقة.",
+          "الأرشيف الواضح يجعل كل موسم يبدأ من نقطة أقوى من السابق."
         ]
       : [
-          "Technical skill is paired here with discipline, teamwork, and communication under pressure.",
-          "A visible archive helps new students understand the pathway in concrete terms.",
-          "An official platform reduces dependence on scattered messages and disconnected files."
+          "Students should be able to see the pathway clearly, not discover it by accident.",
+          "Partners and the university need a stable official reference, not scattered files and messages.",
+          "A visible archive helps each season begin from a stronger point than the last."
         ];
 
   return (
     <>
-      <PageHero
+      <StaticHeroCover
+        className="hero-cover-about"
         hero={content.hero}
         locale={currentLocale}
-        side={
-          <div className="proof-card">
-            <EditorialPhoto
-              alt={
-                currentLocale === "ar"
-                  ? "طلاب ومتطوعون في لقاء داخل مختبرات جامعة حلب"
-                  : "Students and volunteers gathered inside University of Aleppo labs"
-              }
-              description={
-                currentLocale === "ar"
-                  ? "ينطلق النادي من البيئة الجامعية نفسها: مختبرات، لقاءات تعريفية، وتدريب منظم يفتح الطريق نحو ICPC."
-                  : "The chapter grows inside the university itself through labs, orientation sessions, and structured preparation for ICPC."
-              }
-              priority
-              src="/images/acpc-photos/about-meeting.jpg"
-              title={
-                currentLocale === "ar"
-                  ? "مجتمع يبدأ من المختبرات."
-                  : "A community built in the labs."
-              }
-            />
-            <p className="section-kicker">{currentLocale === "ar" ? "الهوية" : "Identity"}</p>
-            <div className="seal-pill">
-              <div className="seal-pill-image-wrap">
-                <Image
-                  alt={
-                    currentLocale === "ar"
-                      ? "شعار جامعة حلب"
-                      : "University of Aleppo seal"
-                  }
-                  className="seal-pill-image"
-                  height={111}
-                  src="/images/acpc-doc/image2.png"
-                  width={112}
-                />
-              </div>
-              <div>
-                <strong>
-                  {currentLocale === "ar" ? "جامعة حلب" : "University of Aleppo"}
-                </strong>
-                <p className="item-copy">
-                  {currentLocale === "ar"
-                    ? "المنصة الجامعية الرسمية لنادٍ يملك خطاباً أوضح وحضوراً عاماً أكثر نضجاً."
-                    : "The official university platform for a club with a clearer public voice and a more durable public presence."}
-                </p>
-              </div>
-            </div>
-          </div>
-        }
       />
 
       <section className="section">
@@ -167,8 +114,8 @@ export default async function AboutPage({ params }: PageProps) {
             kicker={currentLocale === "ar" ? "الرسالة والرؤية" : "Mission & Vision"}
             title={
               currentLocale === "ar"
-                ? "قبل شرح الهيكل، يجب أن تكون غاية النادي واضحة."
-                : "The club's purpose should be clear before its structure is explained."
+                ? "تبدأ صورة النادي الجيدة من وضوح الغاية، لا من كثرة الشرح."
+                : "A strong club starts with a clear purpose, not a long explanation."
             }
           />
           <div className="stack-list">
@@ -190,15 +137,15 @@ export default async function AboutPage({ params }: PageProps) {
 
       <section className="section">
         <SectionHead
-          kicker={currentLocale === "ar" ? "كيف يعمل النادي" : "How the Chapter Works"}
+          kicker={currentLocale === "ar" ? "كيف يعمل النادي" : "How the Club Works"}
           title={
             currentLocale === "ar"
-              ? "أربعة مسارات عمل تكفي لفهم طريقة حركة النادي."
-              : "Four working tracks are enough to understand how the club moves."
+              ? "يتحرّك النادي عبر مسارات عمل واضحة، لا عبر جهد عشوائي."
+              : "The club moves through clear working tracks, not scattered effort."
           }
         />
         <div className="flow-grid">
-          {chapterTracks.map((item) => (
+          {clubTracks.map((item) => (
             <article className="feature-card" key={item.title}>
               <h3>{item.title}</h3>
               <p className="item-copy">{item.description}</p>
@@ -209,16 +156,16 @@ export default async function AboutPage({ params }: PageProps) {
 
       <section className="section">
         <div className="panel panel-minimal">
-          <p className="section-kicker">{currentLocale === "ar" ? "الاستمرارية" : "Continuity"}</p>
+          <p className="section-kicker">{currentLocale === "ar" ? "الذاكرة المؤسسية" : "Institutional Memory"}</p>
           <h3>
             {currentLocale === "ar"
-              ? "يحفظ الموقع الذاكرة المؤسسية مع تغيّر الفرق والدفعات والأدوار."
-              : "The website preserves institutional memory as teams, student cohorts, and leadership roles change."}
+              ? "الموقع جزء من بنية النادي، وليس مجرد صفحة تعريفية."
+              : "The website is part of the club's infrastructure, not just a profile page."}
           </h3>
           <p className="section-copy">
             {currentLocale === "ar"
-              ? "وهذا مهم للنادي نفسه، كما يهم الشركاء والجامعة والطلاب الجدد الذين يحتاجون إلى مرجع رسمي موثوق."
-              : "That continuity matters to the club itself, and also to partners, the university, and new students who need a reliable official reference."}
+              ? "كلما كان المرجع الرسمي أوضح، أصبح انضمام الطلاب أسهل، وتقييم الشركاء أدق، وانتقال المعرفة بين المواسم أكثر استقراراً."
+              : "The clearer the official reference becomes, the easier it is for students to join, for partners to evaluate the club, and for each season to inherit the work of the last."}
             </p>
           <ul className="bullets bullets-compact">
             {valuePoints.map((item) => (

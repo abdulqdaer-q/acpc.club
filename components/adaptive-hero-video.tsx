@@ -2,76 +2,114 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
+import { AcpcLogo } from "@/components/acpc-logo";
 import { Locale } from "@/lib/i18n";
 import { HeroBlock } from "@/lib/site-content";
-
-type NetworkInformationLike = {
-  effectiveType?: string;
-  saveData?: boolean;
-};
 
 type AdaptiveHeroCoverProps = {
   hero: HeroBlock;
   locale: Locale;
 };
 
-export function AdaptiveHeroCover({
-  hero,
-  locale
-}: AdaptiveHeroCoverProps) {
-  const posterSrc = "/media/acpc-promo/poster-31-1080.jpg";
-  const videoSrc = "/media/acpc-promo/hero-preview-31-36-55-75-1080.mp4";
-  const [shouldAutoplay, setShouldAutoplay] = useState(false);
-  const [canLoadOnDemand, setCanLoadOnDemand] = useState(false);
-  const [isLoadedOnDemand, setIsLoadedOnDemand] = useState(false);
+type StaticHeroCoverProps = {
+  hero: HeroBlock;
+  locale: Locale;
+  posterSrc?: string;
+  alt?: string;
+  className?: string;
+};
 
-  useEffect(() => {
-    const connection = (navigator as Navigator & { connection?: NetworkInformationLike })
-      .connection;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isSlowConnection =
-      connection?.saveData === true ||
-      connection?.effectiveType === "slow-2g" ||
-      connection?.effectiveType === "2g" ||
-      connection?.effectiveType === "3g";
+const HERO_VIDEO_SRC = "/media/acpc-promo/hero-club-safe.mp4";
+const HERO_VIDEO_POSTER = "/media/acpc-promo/hero-club-safe-poster.jpg";
 
-    if (connection && !prefersReducedMotion && !isSlowConnection) {
-      setShouldAutoplay(true);
-      return;
-    }
-
-    setCanLoadOnDemand(true);
-  }, []);
-
-  const shouldLoadVideo = shouldAutoplay || isLoadedOnDemand;
-
+function HeroActions({ hero }: { hero: HeroBlock }) {
   return (
-    <section className="hero-cover">
-      <div className="hero-cover-media">
-        <Image
-          alt={locale === "ar" ? "لقطة من فيديو Aleppo CPC" : "Frame from the Aleppo CPC promo"}
-          className="hero-cover-poster"
-          fill
-          priority
-          sizes="100vw"
-          src={posterSrc}
+    <div className="cta-row">
+      <Link className="button button-primary" href={hero.primaryCta.href}>
+        {hero.primaryCta.label}
+      </Link>
+      <Link className="button button-secondary" href={hero.secondaryCta.href}>
+        {hero.secondaryCta.label}
+      </Link>
+    </div>
+  );
+}
+
+function BrandCircuitBackdrop({ locale }: { locale: Locale }) {
+  return (
+    <div className="hero-brand-visual" aria-hidden="true">
+      <div className="hero-brand-castle">
+        <AcpcLogo size="lg" />
+      </div>
+
+      <svg className="hero-circuit-svg" viewBox="0 0 1200 760">
+        <path
+          className="hero-circuit-line hero-circuit-line-primary"
+          d="M104 612 H238 V520 H354 V430 H468 V332 H594"
+          pathLength="100"
+        />
+        <path
+          className="hero-circuit-line hero-circuit-line-secondary"
+          d="M1096 142 H952 V226 H830 V318 H708 V424 H606"
+          pathLength="100"
+        />
+        <path
+          className="hero-circuit-line hero-circuit-line-accent"
+          d="M206 156 H356 V246 H474 V344 H594 V488 H740 V600 H1002"
+          pathLength="100"
+        />
+        <path
+          className="hero-circuit-line hero-circuit-line-soft"
+          d="M128 414 H274 V344 H396 V258 H514"
+          pathLength="100"
+        />
+        <path
+          className="hero-circuit-line hero-circuit-line-soft"
+          d="M1088 502 H916 V430 H798 V342 H682"
+          pathLength="100"
         />
 
-        {shouldLoadVideo ? (
-          <video
-            autoPlay
-            className="hero-cover-video"
-            loop
-            muted
-            playsInline
-            poster={posterSrc}
-            preload={shouldAutoplay ? "metadata" : "none"}
-          >
-            <source src={videoSrc} type="video/mp4" />
-          </video>
-        ) : null}
+        {[
+          [104, 612],
+          [238, 520],
+          [354, 430],
+          [594, 332],
+          [1096, 142],
+          [952, 226],
+          [830, 318],
+          [606, 424],
+          [206, 156],
+          [474, 344],
+          [740, 600],
+          [1002, 600]
+        ].map(([cx, cy]) => (
+          <circle className="hero-circuit-node" cx={cx} cy={cy} key={`${cx}-${cy}`} r="9" />
+        ))}
+      </svg>
+
+      <div className="hero-brand-label">
+        {locale === "ar" ? "CODE. SOLVE. GROW. IMPACT." : "CODE. SOLVE. GROW. IMPACT."}
+      </div>
+    </div>
+  );
+}
+
+export function AdaptiveHeroCover({ hero, locale }: AdaptiveHeroCoverProps) {
+  return (
+    <section className="hero-cover hero-cover-video-shell">
+      <div className="hero-cover-media">
+        <video
+          autoPlay
+          className="hero-cover-video"
+          loop
+          muted
+          playsInline
+          poster={HERO_VIDEO_POSTER}
+        >
+          <source src={HERO_VIDEO_SRC} type="video/mp4" />
+        </video>
+        <BrandCircuitBackdrop locale={locale} />
       </div>
 
       <div className="hero-cover-overlay" />
@@ -80,24 +118,52 @@ export function AdaptiveHeroCover({
         <div className="hero-cover-panel">
           <h1>{hero.title}</h1>
           <p className="hero-text hero-cover-text">{hero.description}</p>
+          <HeroActions hero={hero} />
+        </div>
+      </div>
+    </section>
+  );
+}
 
-          <div className="cta-row">
-            <Link className="button button-primary" href={hero.primaryCta.href}>
-              {hero.primaryCta.label}
-            </Link>
-            <Link className="button button-secondary" href={hero.secondaryCta.href}>
-              {hero.secondaryCta.label}
-            </Link>
-            {canLoadOnDemand && !isLoadedOnDemand ? (
-              <button
-                className="button button-secondary hero-cover-play"
-                onClick={() => setIsLoadedOnDemand(true)}
-                type="button"
-              >
-                {locale === "ar" ? "شاهد الفيديو" : "Watch the video"}
-              </button>
-            ) : null}
-          </div>
+export function StaticHeroCover({
+  hero,
+  locale,
+  posterSrc,
+  alt,
+  className
+}: StaticHeroCoverProps) {
+  const coverClassName = [
+    "hero-cover",
+    posterSrc ? "hero-cover-static" : "hero-cover-brand",
+    className
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <section className={coverClassName}>
+      <div className="hero-cover-media">
+        {posterSrc ? (
+          <Image
+            alt={alt ?? hero.title}
+            className="hero-cover-poster"
+            fill
+            priority
+            sizes="100vw"
+            src={posterSrc}
+          />
+        ) : (
+          <BrandCircuitBackdrop locale={locale} />
+        )}
+      </div>
+
+      <div className="hero-cover-overlay" />
+
+      <div className="hero-cover-inner">
+        <div className="hero-cover-panel">
+          <h1>{hero.title}</h1>
+          <p className="hero-text hero-cover-text">{hero.description}</p>
+          <HeroActions hero={hero} />
         </div>
       </div>
     </section>

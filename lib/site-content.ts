@@ -97,8 +97,27 @@ export type EventItem = {
   details: string[];
 };
 
-export type EventsPageContent = GenericPageContent & {
+export type VolunteersPageContent = GenericPageContent & {
   volunteerTracks: VolunteerTrack[];
+};
+
+export type ClubStructureRole = {
+  title: string;
+  name: string;
+  responsibility: string;
+  linkedin?: string;
+};
+
+export type ClubStructureGroup = {
+  title: string;
+  description: string;
+  roles: ClubStructureRole[];
+};
+
+export type StructurePageContent = GenericPageContent & {
+  supervisor: ClubStructureRole;
+  leadership: ClubStructureRole[];
+  groups: ClubStructureGroup[];
 };
 
 export type SponsorsPageContent = GenericPageContent & {
@@ -119,6 +138,7 @@ export type SiteSettings = {
     instagram?: string;
     linkedin?: string;
     facebook?: string;
+    telegram?: string;
   };
 };
 
@@ -194,9 +214,10 @@ const defaults: Record<
     settings: SiteSettings;
     home: HomeContent;
     about: GenericPageContent;
+    structure: StructurePageContent;
     competition: CompetitionPageContent;
     achievements: AchievementsPageContent;
-    events: EventsPageContent;
+    volunteers: VolunteersPageContent;
     sponsors: SponsorsPageContent;
     achievementsList: AchievementItem[];
     eventsList: EventItem[];
@@ -213,13 +234,17 @@ const defaults: Record<
       whatsappLabel: "WhatsApp",
       whatsappValue: "+971 54 700 1658",
       email: "hello@acpc.club",
-      socialLinks: {}
+      socialLinks: {
+        instagram: "https://www.instagram.com/aleppo_cpc25/",
+        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
+        telegram: "https://t.me/+JP44405xZnIxM2Vk"
+      }
     },
     home: {
       seo: {
         title: "Aleppo CPC | Competitive Programming Club at the University of Aleppo",
         description:
-          "Aleppo Competitive Programming Club is the official competitive programming platform at the University of Aleppo for ICPC training, contests, achievements, and sponsor partnerships.",
+          "Aleppo Competitive Programming Club prepares University of Aleppo students for ICPC through disciplined training, serious contests, mentorship, and partner support.",
         keywords: [
           "Aleppo CPC",
           "University of Aleppo competitive programming club",
@@ -231,11 +256,11 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "",
-        title: "Aleppo Competitive Programming Club",
+        title: "Aleppo CPC",
         description:
-          "The University of Aleppo club for ICPC training, contests, and technical partnerships.",
+          "The University of Aleppo club preparing students for ICPC through disciplined training, serious contests, mentorship, and partnerships that help talent go further.",
         primaryCta: {
-          label: "Sponsor Aleppo CPC",
+          label: "Partner with Aleppo CPC",
           href: "/en/sponsors"
         },
         secondaryCta: {
@@ -261,7 +286,7 @@ const defaults: Record<
         {
           title: "For partners",
           description:
-            "Support a visible university platform that develops high-potential technical talent and connects your brand with a serious student community.",
+            "Partner with a university club that develops high-potential technical students and gives your brand credible visibility around achievement, training, and public impact.",
           action: {
             label: "Explore sponsorship value",
             href: "/en/sponsors"
@@ -270,7 +295,7 @@ const defaults: Record<
         {
           title: "For students",
           description:
-            "Follow the training path, qualification ladder, and latest competition updates.",
+            "Find the training path, contest structure, qualification stages, and the proof that Aleppo teams can reach national, regional, and world stages.",
           action: {
             label: "Explore the pathway",
             href: "/en/competition"
@@ -279,10 +304,10 @@ const defaults: Record<
         {
           title: "For coaches",
           description:
-            "Use the site as the official reference for structure, milestones, and documented results.",
+            "Use the club as a clear reference for training structure, team preparation, milestones, and documented results.",
           action: {
             label: "Review the structure",
-            href: "/en/about"
+            href: "/en/structure"
           }
         }
       ],
@@ -322,7 +347,7 @@ const defaults: Record<
         {
           title: "Institutional credibility",
           description:
-            "The platform presents partners alongside a serious university competition community with documented results and public reach."
+            "The club presents partners beside a serious university competition season with documented results and public reach."
         }
       ],
       editorialHighlights: [
@@ -332,7 +357,7 @@ const defaults: Record<
             "Medals, regional results, and World Finals appearances are documented clearly."
         },
         {
-          title: "Partnership-ready platform",
+          title: "Partnership-ready club",
           description:
             "Students, coaches, and partners can all find the club's story, structure, and official contact path in one place."
         },
@@ -345,50 +370,160 @@ const defaults: Record<
     },
     about: {
       seo: {
-        title: "About Aleppo CPC | Mission, Structure, and Community",
+        title: "About Aleppo CPC | Mission, Structure, and Club Work",
         description:
-          "Learn how Aleppo CPC develops competitive programming talent at the University of Aleppo through training, contests, mentorship, and community leadership.",
+          "Learn how Aleppo CPC develops competitive programming talent at the University of Aleppo through training, contests, mentorship, and clear club leadership.",
         keywords: [
           "Aleppo CPC mission",
           "University of Aleppo programming club",
-          "ICPC community Syria",
+          "ICPC club Syria",
           "competitive programming training Aleppo"
         ]
       },
       hero: {
         eyebrow: "About",
-        title: "The official platform behind Aleppo's competitive programming journey.",
+        title: "Built for ICPC training",
         description:
-          "Aleppo CPC brings together students, coaches, organizers, and partners to build a structured path from local training to regional and global ICPC participation.",
+          "Aleppo CPC gives students a structured path into ICPC: training, team formation, contest practice, operations, documentation, and leadership that can carry from one season to the next.",
         primaryCta: {
-          label: "See achievements",
-          href: "/en/achievements"
+          label: "See the club structure",
+          href: "/en/structure"
         },
         secondaryCta: {
-          label: "Explore partnership value",
-          href: "/en/sponsors"
+          label: "Explore the ICPC pathway",
+          href: "/en/competition"
         }
       },
       sections: [
         {
           title: "Mission",
           body: [
-            "Develop students' algorithmic thinking, problem-solving discipline, and teamwork through a structured competitive programming culture.",
-            "Maintain an official digital platform for updates, institutional memory, public credibility, and partner communication."
+            "Build disciplined problem-solvers through regular training, contest practice, mentorship, and team-based competition.",
+            "Maintain a clear club structure so students, mentors, partners, and the university can understand the work and trust its continuity."
           ]
         },
         {
           title: "Vision",
           body: [
-            "Position the University of Aleppo as a sustained source of competitive programming talent capable of competing nationally, regionally, and globally.",
-            "Build a platform that serves students today and remains credible to partners, universities, and the wider ICPC community."
+            "Make the University of Aleppo a lasting source of ICPC talent, technical leadership, and regional competitive presence.",
+            "Grow a club that remains useful to students, trusted by partners, and legible to the wider ICPC ecosystem."
           ]
         },
         {
           title: "How the club works",
           body: [
-            "The broader competition effort relies on coordination across training, competition, media, operations, technical, volunteer, and judging tracks.",
-            "That structure does more than run events; it teaches students how serious technical communities organize, publish, and deliver under pressure."
+            "Aleppo CPC is not only a contest team. It is a student club with training, contests, media, documentation, operations, and volunteer coordination.",
+            "That structure helps the club scale from one event to the next and gives students practical experience in ownership, delivery, and collaboration."
+          ]
+        }
+      ]
+    },
+    structure: {
+      seo: {
+        title: "Club Structure | Aleppo CPC",
+        description:
+          "Explore the Aleppo CPC organizational structure, leadership roles, and operating teams behind training, media, operations, development, and contest delivery.",
+        keywords: [
+          "Aleppo CPC structure",
+          "Aleppo ICPC club leadership",
+          "University of Aleppo programming club structure",
+          "ICPC operations Aleppo"
+        ]
+      },
+      hero: {
+        eyebrow: "Club Structure",
+        title: "Club structure",
+        description:
+          "The club is organized around supervision, leadership, operations, scientific training, development, media, and room coordination so each season can move with clarity.",
+        primaryCta: {
+          label: "Partner with the club",
+          href: "/en/sponsors"
+        },
+        secondaryCta: {
+          label: "See how the club operates",
+          href: "/en/volunteers"
+        }
+      },
+      sections: [
+        {
+          title: "How the Club Works",
+          body: [
+            "Clear teams keep the season moving: training, competition, media, documentation, operations, logistics, and technical support.",
+            "The structure below turns the club from a loose activity into a repeatable operating system for students, mentors, and partners."
+          ]
+        }
+      ],
+      supervisor: {
+        title: "General Supervisor",
+        name: "Abdulqader Qassab",
+        responsibility: "Keeps the club aligned with its mission, university relationships, and long-term continuity.",
+        linkedin: "https://www.linkedin.com/in/abdulqader-qassab"
+      },
+      leadership: [
+        {
+          title: "Club President",
+          name: "Bassam Suleiman",
+          responsibility: "Coordinates the season plan, team leads, priorities, and official club rhythm.",
+          linkedin: "https://www.linkedin.com/in/bassam-sulaiman/?skipRedirect=true"
+        },
+        {
+          title: "Vice President",
+          name: "Abdul Karim Jamal",
+          responsibility: "Supports execution across teams and keeps internal coordination moving."
+        }
+      ],
+      groups: [
+        {
+          title: "Technical and Development",
+          description: "The technical side keeps systems, contest infrastructure, and digital tools reliable.",
+          roles: [
+            {
+              title: "Technical Operations Director",
+              name: "Mohammad Markatli",
+              responsibility: "Owns contest machines, infrastructure readiness, and technical operating standards.",
+              linkedin: "https://www.linkedin.com/in/mohamad-mazkatli-763715251/"
+            },
+            {
+              title: "Development Lead",
+              name: "Mohammad Bitar",
+              responsibility: "Builds and maintains software, website surfaces, and digital support tools.",
+              linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
+            }
+          ]
+        },
+        {
+          title: "Club Operations",
+          description: "Operations turns plans into an executable contest and training season.",
+          roles: [
+            {
+              title: "Operations Coordinator",
+              name: "Mohammad Rasoul Deryas",
+              responsibility: "Coordinates logistics, check-in, materials, schedules, and on-ground flow.",
+              linkedin: "https://www.linkedin.com/in/muhammed-rasoul-derbas-a71643283/?skipRedirect=true"
+            },
+            {
+              title: "Room Coordinator",
+              name: "Mohammad Bitar",
+              responsibility: "Prepares contest rooms, seating, hardware placement, and room-day stability.",
+              linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
+            }
+          ]
+        },
+        {
+          title: "Scientific and Media",
+          description: "Training quality and public communication make the club credible from inside and outside.",
+          roles: [
+            {
+              title: "Scientific Committee Lead",
+              name: "Mohammad Ward Kayali",
+              responsibility: "Leads training direction, problem practice, scientific review, and team preparation.",
+              linkedin: "https://www.linkedin.com/in/mohammed-ward-kayali-496a7b357/?skipRedirect=true"
+            },
+            {
+              title: "Media Lead",
+              name: "Baraa Nial",
+              responsibility: "Shapes coverage, announcements, visual consistency, and the public record of the club."
+            }
           ]
         }
       ]
@@ -407,7 +542,7 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "Competition",
-        title: "From campus training to the ICPC World Finals.",
+        title: "The ICPC pathway",
         description:
           "Aleppo CPC explains the full ICPC pathway clearly: team format, contest flow, qualification stages, and the preparation required to compete seriously.",
         primaryCta: {
@@ -415,8 +550,8 @@ const defaults: Record<
           href: "/en/achievements"
         },
         secondaryCta: {
-          label: "See event operations",
-          href: "/en/events"
+          label: "See volunteers and operations",
+          href: "/en/volunteers"
         }
       },
       sections: [
@@ -485,7 +620,7 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "Achievements",
-        title: "Results that give the club public credibility.",
+        title: "Results with proof",
         description:
           "Aleppo's record reflects sustained competitive performance across Syrian, regional, and World Finals stages.",
         primaryCta: {
@@ -521,61 +656,61 @@ const defaults: Record<
         }
       ]
     },
-    events: {
+    volunteers: {
       seo: {
-        title: "Events | Aleppo CPC Contests, Operations, and Updates",
+        title: "Volunteer Teams | Aleppo CPC",
         description:
-          "Follow Aleppo CPC events, contest operations, volunteer tracks, and official competition updates from the University of Aleppo.",
+          "Meet the Aleppo CPC volunteer teams behind media, logistics, operations, technical support, and participant experience at the University of Aleppo.",
         keywords: [
-          "Aleppo CPC events",
-          "programming contest volunteers",
-          "ICPC event operations",
-          "Aleppo programming competition"
+          "Aleppo CPC volunteer teams",
+          "programming contest volunteers Syria",
+          "ICPC operations Aleppo",
+          "University of Aleppo volunteers"
         ]
       },
       hero: {
-        eyebrow: "Events",
-        title: "The operational side of every serious contest.",
+        eyebrow: "Volunteers",
+        title: "Volunteer teams",
         description:
-          "Aleppo CPC events combine programming competition, volunteer coordination, technical delivery, media, and logistics in one public-facing platform.",
+          "Aleppo CPC relies on small volunteer teams that handle media, logistics, operations, technical setup, and participant support across training days and contest events.",
         primaryCta: {
           label: "See the partnerships page",
           href: "/en/sponsors"
         },
         secondaryCta: {
-          label: "Return home",
-          href: "/en"
+          label: "Explore the competition path",
+          href: "/en/competition"
         }
       },
       sections: [
         {
-          title: "Why a public events page matters",
+          title: "Why these teams matter",
           body: [
-            "Participants need accurate updates, schedules, and practical guidance before and during each event.",
-            "Sponsors and partners need a professional place to understand event scale, visibility, and organizational maturity."
+            "Volunteering at Aleppo CPC is not a side task. It is one of the ways students learn responsibility, coordination, delivery, and calm decision-making under pressure.",
+            "For partners, strong volunteer teams are a sign that the club can organize serious public events and sustain growth beyond a single contest day."
           ]
         }
       ],
       volunteerTracks: [
         {
-          title: "Media",
-          description: "Photography, video coverage, social publishing, and branded visual output."
+          title: "Media team",
+          description: "Photography, short-form video, live coverage, and the public record of club activity."
         },
         {
-          title: "Logistics",
-          description: "Venue preparation, supplies, seating, electricity backup, and accommodation coordination."
+          title: "Logistics team",
+          description: "Hall setup, supplies, seating flow, signage, and the practical details that keep the day stable."
         },
         {
-          title: "Operations",
-          description: "Check-in, schedule control, announcements, issue handling, and participant flow."
+          title: "Operations team",
+          description: "Check-in, schedule control, announcements, issue handling, and the movement of participants through the day."
         },
         {
-          title: "Technical",
-          description: "Contest machines, display setup, software readiness, and technical troubleshooting."
+          title: "Technical team",
+          description: "Contest machines, scoreboard screens, software readiness, printing, and fast troubleshooting when something breaks."
         },
         {
-          title: "Volunteer coordination",
-          description: "On-ground assistance, printed-material distribution, participant support, and venue flow."
+          title: "Support team",
+          description: "On-ground assistance, printed materials, hospitality, and a smoother experience for students, coaches, and guests."
         }
       ]
     },
@@ -583,7 +718,7 @@ const defaults: Record<
       seo: {
         title: "Sponsors and Partnerships | Aleppo CPC",
         description:
-          "Partner with Aleppo CPC to support competitive programming at the University of Aleppo and reach a visible community of high-potential technical talent.",
+          "Partner with Aleppo CPC to support competitive programming at the University of Aleppo and reach a visible club of high-potential technical talent.",
         keywords: [
           "Aleppo CPC sponsors",
           "sponsor university competition Syria",
@@ -593,30 +728,30 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "Partnerships",
-        title: "A partnership platform built on talent, visibility, and educational impact.",
+        title: "Partner with the club",
         description:
-          "Aleppo CPC offers partners a credible way to support student excellence, gain meaningful visibility, and align with a respected university competition community.",
+          "Aleppo CPC gives sponsors a credible way to support student excellence, strengthen technical education, and appear across a serious university competition season.",
         primaryCta: {
-          label: "Start a partnership conversation",
+          label: "Start a Partnership Conversation",
           href: "https://wa.me/971547001658"
         },
         secondaryCta: {
-          label: "See event operations",
-          href: "/en/events"
+          label: "See the club structure",
+          href: "/en/structure"
         }
       },
       sections: [
         {
           title: "Why partnership matters",
           body: [
-            "Programming contests surface disciplined, high-agency students who already work under pressure and collaborate effectively.",
-            "A professional website extends partner visibility beyond a single contest day and makes the relationship legible to the full community."
+            "ICPC training reveals students who can think under pressure, work in teams, and solve difficult technical problems with discipline.",
+            "Sponsorship helps the club expand training, improve events, support teams, and document achievement with the standard it deserves."
           ]
         }
       ],
       tiers: [
         {
-          name: "Founding Partner",
+          name: "Lead Club Partner",
           audience: "For organizations seeking category-leading visibility.",
           benefits: [
             "Primary placement on the homepage and partnerships page",
@@ -625,7 +760,7 @@ const defaults: Record<
           ]
         },
         {
-          name: "Technical Sponsor",
+          name: "Technical Partner",
           audience: "For companies supporting talent development and event operations.",
           benefits: [
             "Visible placement across event pages and digital materials",
@@ -634,7 +769,7 @@ const defaults: Record<
           ]
         },
         {
-          name: "Community Supporter",
+          name: "Education Supporter",
           audience: "For institutions and partners investing in long-term educational impact.",
           benefits: [
             "Recognition on the partnerships page and selected media assets",
@@ -733,20 +868,24 @@ const defaults: Record<
   ar: {
     settings: {
       organizationName: "Aleppo CPC",
-      tagline: "المنصة الرسمية للبرمجة التنافسية في جامعة حلب.",
+      tagline: "النادي الرسمي للبرمجة التنافسية في جامعة حلب.",
       location: "حلب، سوريا",
       contactLabel: "التنسيق الرسمي",
       contactValue: "Aleppo CPC",
       whatsappLabel: "واتساب",
       whatsappValue: "+971 54 700 1658",
       email: "hello@acpc.club",
-      socialLinks: {}
+      socialLinks: {
+        instagram: "https://www.instagram.com/aleppo_cpc25/",
+        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
+        telegram: "https://t.me/+JP44405xZnIxM2Vk"
+      }
     },
     home: {
       seo: {
         title: "Aleppo CPC | نادي البرمجة التنافسية في جامعة حلب",
         description:
-          "Aleppo CPC هو المنصة الرسمية للبرمجة التنافسية في جامعة حلب للتدريب على ICPC، والمسابقات، والإنجازات، والشراكات الداعمة.",
+          "Aleppo CPC هو نادي جامعة حلب الذي يهيئ الطلاب لمسار ICPC عبر تدريب منظم ومسابقات جادة وإرشاد وشراكات داعمة.",
         keywords: [
           "Aleppo CPC",
           "البرمجة التنافسية في سوريا",
@@ -759,9 +898,9 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "",
-        title: "نادي حلب للبرمجة التنافسية",
+        title: "Aleppo CPC",
         description:
-          "نادي جامعة حلب للتدريب على ICPC، والمسابقات، والشراكات التقنية الداعمة.",
+          "نادي جامعة حلب الذي يهيئ الطلاب لمسار ICPC عبر تدريب منظم، ومسابقات جادة، وإرشاد فعلي، وشراكات تدفع المواهب إلى مدى أبعد.",
         primaryCta: {
           label: "كن شريكاً مع Aleppo CPC",
           href: "/ar/sponsors"
@@ -789,7 +928,7 @@ const defaults: Record<
         {
           title: "للشركاء",
           description:
-            "ادعم منصة جامعية واضحة تطور المواهب التقنية وتمنح علامتك حضوراً مرتبطاً بالإنجاز.",
+            "ادعموا نادياً جامعياً يطور طلاباً تقنيين واعدين ويمنح علامتكم حضوراً موثوقاً مرتبطاً بالإنجاز والتدريب والأثر العام.",
           action: {
             label: "اكتشف قيمة الشراكة",
             href: "/ar/sponsors"
@@ -798,7 +937,7 @@ const defaults: Record<
         {
           title: "للطلاب",
           description:
-            "تعرّف إلى التدريب، والتأهل، وآخر التحديثات المرتبطة بالمسابقات.",
+            "تعرفوا إلى مسار التدريب، وبنية المسابقات، ومراحل التأهل، وما يثبت أن فرق حلب قادرة على الوصول وطنياً وإقليمياً وعالمياً.",
           action: {
             label: "استكشف المسار",
             href: "/ar/competition"
@@ -807,10 +946,10 @@ const defaults: Record<
         {
           title: "للمدربين",
           description:
-            "مرجع رسمي لبنية المسار التنافسي، والمراحل، والنتائج الموثقة.",
+            "اعتمدوا النادي كمرجع واضح لبنية التدريب، وتحضير الفرق، والمراحل، والنتائج الموثقة.",
           action: {
             label: "راجع الهيكل",
-            href: "/ar/about"
+            href: "/ar/structure"
           }
         }
       ],
@@ -850,7 +989,7 @@ const defaults: Record<
         {
           title: "مصداقية مؤسسية",
           description:
-            "يقدّم الموقع صورة احترافية تربط الراعي بمجتمع جامعي جاد وله إنجازات موثقة وحضور عام واضح."
+            "يقدم النادي صورة احترافية تربط الراعي بموسم جامعي جاد له إنجازات موثقة وحضور عام واضح."
         }
       ],
       editorialHighlights: [
@@ -860,7 +999,7 @@ const defaults: Record<
             "الميداليات والنتائج الإقليمية والمشاركات العالمية موثقة بوضوح."
         },
         {
-          title: "منصة جاهزة للشراكات",
+          title: "نادٍ جاهز للشراكات",
           description:
             "قصة النادي، وبنيته، ومسار التواصل الرسمي متاحة بوضوح للطلاب والشركاء."
         },
@@ -873,50 +1012,160 @@ const defaults: Record<
     },
     about: {
       seo: {
-        title: "عن Aleppo CPC | الرسالة والبنية والمجتمع",
+        title: "عن Aleppo CPC | الرسالة وبنية النادي",
         description:
-          "تعرّف إلى دور Aleppo CPC في تطوير المواهب البرمجية في جامعة حلب عبر التدريب والمسابقات والإرشاد والعمل المجتمعي.",
+          "تعرف إلى دور Aleppo CPC في تطوير المواهب البرمجية في جامعة حلب عبر التدريب والمسابقات والإرشاد وبنية نادي واضحة.",
         keywords: [
           "رسالة Aleppo CPC",
           "نادي البرمجة جامعة حلب",
-          "مجتمع ICPC سوريا",
+          "نادي ICPC سوريا",
           "تدريب البرمجة التنافسية حلب"
         ]
       },
       hero: {
         eyebrow: "عن النادي",
-        title: "المنصة الرسمية لمسار البرمجة التنافسية في جامعة حلب.",
+        title: "نادي مبني لمسار ICPC",
         description:
-          "يجمع Aleppo CPC الطلاب والمدربين والمنظمين والشركاء لبناء مسار واضح يبدأ من التدريب المحلي ويصل إلى المشاركات الإقليمية والعالمية.",
+          "يوفر Aleppo CPC للطلاب مساراً منظماً إلى ICPC: تدريباً، وتشكيل فرق، وممارسة تنافسية، وتشغيلاً، وتوثيقاً، وقيادة تنتقل من موسم إلى آخر.",
         primaryCta: {
-          label: "شاهد الإنجازات",
-          href: "/ar/achievements"
+          label: "شاهد هيكل النادي",
+          href: "/ar/structure"
         },
         secondaryCta: {
-          label: "اكتشف قيمة الشراكة",
-          href: "/ar/sponsors"
+          label: "استكشف مسار ICPC",
+          href: "/ar/competition"
         }
       },
       sections: [
         {
           title: "الرسالة",
           body: [
-            "تنمية التفكير الخوارزمي والانضباط في حل المشكلات وروح العمل الجماعي لدى الطلاب من خلال ثقافة تدريب ومنافسة واضحة.",
-            "إدارة منصة رقمية رسمية تحفظ الذاكرة المؤسسية وتسهّل التحديثات وتعزز المصداقية العامة والتواصل مع الشركاء."
+            "بناء طلاب منضبطين في حل المشكلات عبر تدريب منتظم، وممارسة تنافسية، وإرشاد، وعمل جماعي.",
+            "ترسيخ بنية واضحة للنادي تجعل عمله مفهوماً وموثوقاً للطلاب والمدربين والشركاء والجامعة."
           ]
         },
         {
           title: "الرؤية",
           body: [
-            "ترسيخ حضور جامعة حلب كمصدر مستدام للمواهب البرمجية القادرة على المنافسة محلياً وإقليمياً وعالمياً.",
-            "بناء منصة تخدم الطلاب اليوم وتبقى موثوقة للشركاء والجامعات ومجتمع ICPC الأوسع."
+            "ترسيخ جامعة حلب كمصدر مستدام لمواهب ICPC والقيادة التقنية والحضور التنافسي الإقليمي.",
+            "تنمية نادٍ يبقى مفيداً للطلاب وموثوقاً للشركاء ومفهوماً داخل منظومة ICPC الأوسع."
           ]
         },
         {
           title: "كيف يعمل النادي",
           body: [
-            "يعتمد العمل حول المسابقة على تنسيق بين مسارات التدريب والمنافسة والإعلام والعمليات والفريق التقني والتطوع والتحكيم.",
-            "ولا يقتصر هذا الهيكل على إدارة الفعاليات، بل يعلّم الطلاب كيف تُبنى المجتمعات التقنية الجادة وتُدار وتُنشر أعمالها تحت الضغط."
+            "Aleppo CPC ليس فريق مسابقة فقط، بل نادٍ طلابي يعمل عبر التدريب، والمسابقات، والإعلام، والتوثيق، والعمليات، والتطوع.",
+            "يساعد هذا الهيكل النادي على التوسع من فعالية إلى أخرى، ويمنح الطلاب خبرة عملية في المسؤولية والتنفيذ والتعاون."
+          ]
+        }
+      ]
+    },
+    structure: {
+      seo: {
+        title: "هيكل النادي | Aleppo CPC",
+        description:
+          "تعرف إلى الهيكل التنظيمي لنادي Aleppo CPC وأدوار القيادة والفرق المسؤولة عن التدريب والإعلام والعمليات والتطوير وتنفيذ المسابقات.",
+        keywords: [
+          "هيكل Aleppo CPC",
+          "نادي البرمجة التنافسية جامعة حلب",
+          "قيادة Aleppo CPC",
+          "تشغيل مسابقات ICPC حلب"
+        ]
+      },
+      hero: {
+        eyebrow: "هيكل النادي",
+        title: "هيكل النادي",
+        description:
+          "ينظم النادي عمله عبر الإشراف، والقيادة، والعمليات، والتدريب العلمي، والتطوير، والإعلام، وتنسيق القاعات حتى يتحرك كل موسم بوضوح.",
+        primaryCta: {
+          label: "شاركوا النادي",
+          href: "/ar/sponsors"
+        },
+        secondaryCta: {
+          label: "تعرفوا إلى تشغيل النادي",
+          href: "/ar/volunteers"
+        }
+      },
+      sections: [
+        {
+          title: "كيف يعمل النادي",
+          body: [
+            "تبقي الفرق الواضحة الموسم متماسكاً: التدريب، المسابقة، الإعلام، التوثيق، العمليات، اللوجستيك، والدعم التقني.",
+            "الهيكل أدناه يحول النادي من نشاط متفرق إلى نظام عمل قابل للتكرار للطلاب والمدربين والشركاء."
+          ]
+        }
+      ],
+      supervisor: {
+        title: "المشرف العام",
+        name: "عبد القادر قصاب",
+        responsibility: "يحافظ على اتساق النادي مع رسالته وعلاقاته الجامعية واستمراريته طويلة المدى.",
+        linkedin: "https://www.linkedin.com/in/abdulqader-qassab"
+      },
+      leadership: [
+        {
+          title: "رئيس النادي",
+          name: "بسام سليمان",
+          responsibility: "ينسق خطة الموسم وقادة الفرق والأولويات والإيقاع الرسمي للنادي.",
+          linkedin: "https://www.linkedin.com/in/bassam-sulaiman/?skipRedirect=true"
+        },
+        {
+          title: "نائب الرئيس",
+          name: "عبد الكريم جمل",
+          responsibility: "يدعم التنفيذ بين الفرق ويحافظ على حركة التنسيق الداخلي."
+        }
+      ],
+      groups: [
+        {
+          title: "التقنية والتطوير",
+          description: "يحافظ المسار التقني على جاهزية الأنظمة وبنية المسابقة والأدوات الرقمية.",
+          roles: [
+            {
+              title: "مدير العمليات التقنية",
+              name: "محمد ماركتلي",
+              responsibility: "يتابع أجهزة المسابقة وجاهزية البنية التقنية ومعايير التشغيل.",
+              linkedin: "https://www.linkedin.com/in/mohamad-mazkatli-763715251/"
+            },
+            {
+              title: "رئيس التطوير",
+              name: "محمد بيطار",
+              responsibility: "يطور الموقع والأدوات البرمجية والواجهات الرقمية الداعمة للنادي.",
+              linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
+            }
+          ]
+        },
+        {
+          title: "عمليات النادي",
+          description: "تحول العمليات الخطط إلى موسم تدريبي ومسابقة قابلة للتنفيذ.",
+          roles: [
+            {
+              title: "منسق العمليات",
+              name: "محمد رسول درياس",
+              responsibility: "ينسق اللوجستيك والتسجيل والمواد والجداول وحركة المشاركين.",
+              linkedin: "https://www.linkedin.com/in/muhammed-rasoul-derbas-a71643283/?skipRedirect=true"
+            },
+            {
+              title: "منسق الغرفة",
+              name: "محمد بيطار",
+              responsibility: "يجهز القاعات وتوزيع المقاعد والأجهزة واستقرار يوم المسابقة.",
+              linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
+            }
+          ]
+        },
+        {
+          title: "العلمي والإعلام",
+          description: "جودة التدريب والتواصل العام يجعلان النادي موثوقاً من الداخل والخارج.",
+          roles: [
+            {
+              title: "رئيس اللجنة العلمية",
+              name: "محمد ورد كيالي",
+              responsibility: "يقود اتجاه التدريب وممارسة المسائل والمراجعة العلمية وتحضير الفرق.",
+              linkedin: "https://www.linkedin.com/in/mohammed-ward-kayali-496a7b357/?skipRedirect=true"
+            },
+            {
+              title: "رئيس الإعلام",
+              name: "براء نيال",
+              responsibility: "يشكل التغطية والإعلانات والاتساق البصري والسجل العام للنادي."
+            }
           ]
         }
       ]
@@ -935,7 +1184,7 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "المسابقة",
-        title: "من التدريب الجامعي إلى النهائي العالمي في ICPC.",
+        title: "مسار ICPC",
         description:
           "يشرح Aleppo CPC مسار ICPC كاملاً بوضوح: تشكيل الفريق، وآلية المسابقة، ومراحل التأهل، والاستعداد المطلوب للمنافسة الجادة.",
         primaryCta: {
@@ -943,8 +1192,8 @@ const defaults: Record<
           href: "/ar/achievements"
         },
         secondaryCta: {
-          label: "شاهد العمليات",
-          href: "/ar/events"
+          label: "شاهد المتطوعين والتشغيل",
+          href: "/ar/volunteers"
         }
       },
       sections: [
@@ -1013,7 +1262,7 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "الإنجازات",
-        title: "نتائج تصنع المصداقية العامة للنادي.",
+        title: "نتائج موثقة",
         description:
           "يعكس سجل حلب التنافسي حضوراً متواصلاً عبر المراحل السورية والإقليمية والعالمية.",
         primaryCta: {
@@ -1049,61 +1298,61 @@ const defaults: Record<
         }
       ]
     },
-    events: {
+    volunteers: {
       seo: {
-        title: "الفعاليات والعمليات | Aleppo CPC",
+        title: "فرق المتطوعين | Aleppo CPC",
         description:
-          "تابع فعاليات Aleppo CPC، ومسارات التشغيل، والتحديثات الرسمية الخاصة بالمسابقات البرمجية في جامعة حلب.",
+          "تعرّف إلى فرق المتطوعين في Aleppo CPC التي تقود الإعلام واللوجستيك والعمليات والدعم التقني وتجربة المشاركين داخل جامعة حلب.",
         keywords: [
-          "فعاليات Aleppo CPC",
-          "متطوعو المسابقة البرمجية",
+          "فرق متطوعي Aleppo CPC",
+          "التطوع في المسابقة البرمجية",
           "تشغيل فعاليات ICPC",
-          "مسابقة حلب البرمجية"
+          "التطوع جامعة حلب"
         ]
       },
       hero: {
-        eyebrow: "الفعاليات",
-        title: "الجانب التشغيلي وراء كل مسابقة جادة.",
+        eyebrow: "المتطوعون",
+        title: "فرق الموسم",
         description:
-          "تجمع فعاليات Aleppo CPC بين المنافسة البرمجية والتشغيل التقني والتغطية الإعلامية واللوجستيك والتطوع ضمن منصة عامة واضحة وسهلة المتابعة.",
+          "يعتمد Aleppo CPC على فرق تطوعية صغيرة تتولى الإعلام، واللوجستيك، والعمليات، والتجهيز التقني، ودعم المشاركين في أيام التدريب والمسابقة.",
         primaryCta: {
           label: "صفحة الشراكات",
           href: "/ar/sponsors"
         },
         secondaryCta: {
-          label: "العودة للرئيسية",
-          href: "/ar"
+          label: "استكشف مسار المسابقة",
+          href: "/ar/competition"
         }
       },
       sections: [
         {
-          title: "لماذا تحتاج الفعاليات إلى منصة رقمية",
+          title: "لماذا تهم هذه الفرق",
           body: [
-            "يحتاج المشاركون إلى تحديثات دقيقة وجداول واضحة وإرشادات عملية قبل الفعالية وخلالها.",
-            "ويحتاج الشركاء إلى مساحة احترافية توضح حجم الحدث، وقدرته التنظيمية، وقيمته الإعلامية."
+            "التطوع في Aleppo CPC ليس مهمة جانبية، بل مساحة يتعلم فيها الطلاب المسؤولية، والتنسيق، والتنفيذ، واتخاذ القرار بهدوء تحت الضغط.",
+            "كما يرى الشركاء في هذه الفرق دليلاً واضحاً على أن النادي قادر على تنظيم فعاليات جادة وبناء نمو مستمر يتجاوز يوم المسابقة نفسه."
           ]
         }
       ],
       volunteerTracks: [
         {
-          title: "الإعلام",
-          description: "التصوير والفيديو والنشر على المنصات الاجتماعية وإخراج الهوية البصرية."
+          title: "فريق الإعلام",
+          description: "التصوير، والفيديو القصير، والتغطية المباشرة، وبناء السجل العام لأنشطة النادي."
         },
         {
-          title: "اللوجستيك",
-          description: "تجهيز المكان والمواد والطاولات والكهرباء الاحتياطية والسكن والنقل."
+          title: "فريق اللوجستيك",
+          description: "تهيئة القاعات، والمواد، والطاولات، واللافتات، والتفاصيل التي تحفظ استقرار اليوم."
         },
         {
-          title: "العمليات",
-          description: "التسجيل وإدارة الجدول والإعلانات وحل المشكلات وتنظيم حركة المشاركين."
+          title: "فريق العمليات",
+          description: "التسجيل، وإدارة الجدول، والإعلانات، وحل المشكلات، وتنظيم حركة المشاركين طوال اليوم."
         },
         {
           title: "الفريق التقني",
-          description: "تجهيز الأجهزة والعرض البرمجي والبرمجيات وحل الأعطال التقنية."
+          description: "تجهيز الأجهزة، وشاشات العرض والسكوربورد، والبرمجيات، والمعالجة السريعة للأعطال عند الحاجة."
         },
         {
-          title: "المتطوعون",
-          description: "المساندة الميدانية وتوزيع المواد ومساعدة المشاركين وتنظيم حركة المكان طوال الفعالية."
+          title: "فريق الدعم",
+          description: "المساندة الميدانية، وتوزيع المواد، والضيافة، وتقديم تجربة أكثر سلاسة للطلاب والمدربين والضيوف."
         }
       ]
     },
@@ -1111,7 +1360,7 @@ const defaults: Record<
       seo: {
         title: "الشراكات والرعايات | Aleppo CPC",
         description:
-          "شارك مع Aleppo CPC لدعم البرمجة التنافسية في جامعة حلب والوصول إلى مجتمع واضح من المواهب التقنية الواعدة.",
+          "شارك مع Aleppo CPC لدعم البرمجة التنافسية في جامعة حلب والوصول إلى نادٍ واضح من المواهب التقنية الواعدة.",
         keywords: [
           "رعاة Aleppo CPC",
           "رعاية مسابقة جامعية سوريا",
@@ -1121,31 +1370,31 @@ const defaults: Record<
       },
       hero: {
         eyebrow: "الشراكات",
-        title: "منصة شراكة قائمة على المواهب، والظهور، والأثر التعليمي.",
+        title: "شراكة مع النادي",
         description:
-          "يوفر Aleppo CPC للشركاء طريقة موثوقة لدعم التميز الطلابي، والحصول على حضور واضح، والارتباط بمجتمع جامعي يحظى باحترام ونتائج موثقة.",
+          "يمنح Aleppo CPC الرعاة طريقاً موثوقاً لدعم التميز الطلابي، وتعزيز التعليم التقني، والظهور ضمن موسم جامعي تنافسي جاد.",
         primaryCta: {
           label: "ابدأ محادثة شراكة",
           href: "https://wa.me/971547001658"
         },
         secondaryCta: {
-          label: "شاهد العمليات",
-          href: "/ar/events"
+          label: "شاهد هيكل النادي",
+          href: "/ar/structure"
         }
       },
       sections: [
         {
           title: "لماذا الشراكة مهمة",
           body: [
-            "تكشف المسابقات البرمجية عن طلاب يتمتعون بالانضباط والقدرة على التحليل والعمل تحت الضغط والتعاون الفعّال.",
-            "ويمنح الموقع الاحترافي الشركاء حضوراً مستمراً يتجاوز يوم الفعالية الواحدة ويحوّل الشراكة إلى قصة مقروءة وواضحة."
+            "يكشف تدريب ICPC عن طلاب قادرين على التفكير تحت الضغط، والعمل ضمن فرق، وحل مشكلات تقنية صعبة بانضباط.",
+            "تساعد الرعاية النادي على توسيع التدريب، وتحسين الفعاليات، ودعم الفرق، وتوثيق الإنجاز بالمستوى الذي يستحقه."
           ]
         }
       ],
       tiers: [
         {
-          name: "شريك تأسيسي",
-          audience: "للجهات التي تبحث عن أعلى مستوى من الظهور والارتباط بالمنصة.",
+          name: "الشريك الرئيسي للنادي",
+          audience: "للجهات التي تبحث عن أعلى مستوى من الظهور والارتباط بالنادي.",
           benefits: [
             "حضور أساسي في الصفحة الرئيسية وصفحة الشراكات",
             "ذكر بارز في الافتتاح والختام",
@@ -1153,7 +1402,7 @@ const defaults: Record<
           ]
         },
         {
-          name: "راعٍ تقني",
+          name: "الشريك التقني",
           audience: "للشركات الداعمة للمواهب التقنية وتشغيل الفعاليات.",
           benefits: [
             "ظهور واضح في صفحات الفعاليات والمواد الرقمية",
@@ -1162,7 +1411,7 @@ const defaults: Record<
           ]
         },
         {
-          name: "داعم مجتمعي",
+          name: "داعم التعليم",
           audience: "للمؤسسات والجهات الراغبة في دعم الأثر التعليمي طويل الأمد.",
           benefits: [
             "ذكر في صفحة الشراكات وبعض الأصول الإعلامية المختارة",
@@ -1344,9 +1593,10 @@ export async function getSiteSettings(locale: Locale): Promise<SiteSettings> {
     whatsappValue: data.whatsapp_value,
     email: data.email,
     socialLinks: {
-      instagram: data.instagram_url ?? undefined,
-      linkedin: data.linkedin_url ?? undefined,
-      facebook: data.facebook_url ?? undefined
+      instagram: data.instagram_url ?? fallback.socialLinks.instagram,
+      linkedin: data.linkedin_url ?? fallback.socialLinks.linkedin,
+      facebook: data.facebook_url ?? fallback.socialLinks.facebook,
+      telegram: fallback.socialLinks.telegram
     }
   };
 }
@@ -1357,6 +1607,10 @@ export async function getHomeContent(locale: Locale): Promise<HomeContent> {
 
 export async function getAboutContent(locale: Locale): Promise<GenericPageContent> {
   return mergePagePayload(defaults[locale].about, await getPageRow("about", locale));
+}
+
+export async function getStructureContent(locale: Locale): Promise<StructurePageContent> {
+  return mergePagePayload(defaults[locale].structure, await getPageRow("structure", locale));
 }
 
 export async function getCompetitionContent(locale: Locale): Promise<CompetitionPageContent> {
@@ -1372,8 +1626,10 @@ export async function getAchievementsPageContent(
   );
 }
 
-export async function getEventsPageContent(locale: Locale): Promise<EventsPageContent> {
-  return mergePagePayload(defaults[locale].events, await getPageRow("events", locale));
+export async function getVolunteersPageContent(
+  locale: Locale
+): Promise<VolunteersPageContent> {
+  return mergePagePayload(defaults[locale].volunteers, await getPageRow("volunteers", locale));
 }
 
 export async function getSponsorsPageContent(locale: Locale): Promise<SponsorsPageContent> {

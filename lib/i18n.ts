@@ -5,27 +5,32 @@ export type Locale = (typeof locales)[number];
 export type PageSlug =
   | "home"
   | "about"
+  | "structure"
   | "competition"
   | "achievements"
   | "events"
+  | "volunteers"
   | "sponsors";
 
 export const defaultLocale: Locale = "en";
 
 export const routeSegments: Record<Exclude<PageSlug, "home">, string> = {
   about: "about",
+  structure: "structure",
   competition: "competition",
   achievements: "achievements",
   events: "events",
+  volunteers: "volunteers",
   sponsors: "sponsors"
 };
 
 export const pageOrder: PageSlug[] = [
   "home",
   "about",
+  "structure",
   "competition",
   "achievements",
-  "events",
+  "volunteers",
   "sponsors"
 ];
 
@@ -70,17 +75,21 @@ export const navigationLabels: Record<Locale, Record<PageSlug, string>> = {
   en: {
     home: "Home",
     about: "About",
+    structure: "Structure",
     competition: "Competition",
     achievements: "Achievements",
     events: "Events",
+    volunteers: "Volunteers",
     sponsors: "Partnerships"
   },
   ar: {
     home: "الرئيسية",
     about: "عن النادي",
+    structure: "الهيكل",
     competition: "المسابقة",
     achievements: "الإنجازات",
     events: "الفعاليات",
+    volunteers: "المتطوعون",
     sponsors: "الشراكات"
   }
 };

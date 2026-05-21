@@ -4,34 +4,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import { useHomeSlideDeck } from "@/components/home-slide-deck";
-
-type JourneyMetric = {
-  value: string;
-  label: string;
-};
-
-type JourneyMapMarker = {
-  x: number;
-  y: number;
-  label: string;
-  tone?: "muted" | "strong";
-};
-
-type JourneyMap = {
-  routePath: string;
-  markers: JourneyMapMarker[];
-  pin: { x: number; y: number; halo: number };
-};
-
-export type JourneyLevelData = {
-  id: string;
-  levelLabel: string;
-  title: string;
-  description: string;
-  proof: JourneyMetric[];
-  side: "start" | "end";
-  map: JourneyMap;
-};
+import type { JourneyLevelData } from "@/lib/journey-content";
 
 type JourneyIntroSlideProps = {
   title: string;
@@ -193,44 +166,46 @@ export function JourneyProgressRail({ items }: JourneyProgressRailProps) {
 }
 
 function MapScene({ level }: { level: JourneyLevelData }) {
+  const isWorldStage = level.id === "world";
+
   return (
     <figure aria-hidden="true" className="journey-stage-map" data-stage={level.id}>
       <StageMedia level={level} />
-      <MapUiOverlay stageId={level.id} />
-      <svg className="journey-stage-map-svg" viewBox="0 0 860 620">
-        <path className="journey-stage-map-route" d={level.map.routePath} />
-        {level.map.markers.map((marker) => (
-          <g key={`${level.id}-${marker.label}`}>
-            <circle className="journey-stage-map-ring" cx={marker.x} cy={marker.y} r="22" />
-            <circle
-              className="journey-stage-map-marker"
-              cx={marker.x}
-              cy={marker.y}
-              data-tone={marker.tone ?? "strong"}
-              r="7"
-            />
-          </g>
-        ))}
-        <circle className="journey-stage-map-halo" cx={level.map.pin.x} cy={level.map.pin.y} r={level.map.pin.halo} />
-      </svg>
+      {!isWorldStage ? <MapUiOverlay stageId={level.id} /> : null}
+      {!isWorldStage ? (
+        <svg className="journey-stage-map-svg" viewBox="0 0 860 620">
+          <path className="journey-stage-map-route" d={level.map.routePath} />
+          {level.map.markers.map((marker) => (
+            <g key={`${level.id}-${marker.label}`}>
+              <circle className="journey-stage-map-ring" cx={marker.x} cy={marker.y} r="22" />
+              <circle
+                className="journey-stage-map-marker"
+                cx={marker.x}
+                cy={marker.y}
+                data-tone={marker.tone ?? "strong"}
+                r="7"
+              />
+            </g>
+          ))}
+          <circle className="journey-stage-map-halo" cx={level.map.pin.x} cy={level.map.pin.y} r={level.map.pin.halo} />
+        </svg>
+      ) : null}
     </figure>
   );
 }
 
 const STAGE_MEDIA = {
   aleppo: {
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDMWfWqwc6s2khvTTZfGjboAMygRfIsh-Hrn1408vB2p9Zgox7UzXkjcvJ5VE8ezrfIHP2WvYb4PNc3HE5PdsyAFwm14-MPo84zKbbN8HJWJqvSiisYg6yN8s9tm4c5iT4tGCeLjWfyhuQl-jWUS45XnXspScFYgmft4qYYJ9HM3fmGJ6qjhkwblBqD0UwJO5-A1NKvfYiYwztNKbwPII9ywAgr0DkEBjNhUMWBY4BFzWCtdBaLUsu8qND6J3PPHS3XBseOeOk2biM"
+    image: "/images/acpc-photos/achievements-winners.jpg"
   },
   syria: {
-    image: "/images/journey/syria-scpc-2025.jpg"
+    image: "/images/acpc-photos/achievements-winners.jpg"
   },
   region: {
-    primary: "/images/journey/acpc-group-2025.jpg"
+    primary: "/images/icpc-teams/2023.jpg"
   },
   world: {
-    background:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+    background: "/images/icpc-teams/2023.jpg"
   }
 } as const;
 
@@ -300,17 +275,8 @@ function StageMedia({ level }: { level: JourneyLevelData }) {
     <div className="journey-scene-media journey-scene-media-world">
       <div
         className="journey-scene-world"
-        style={{ backgroundImage: `linear-gradient(rgba(8, 14, 24, 0.52), rgba(8, 14, 24, 0.72)), url(${STAGE_MEDIA.world.background})` }}
-      >
-        <div className="journey-scene-world-nodes">
-          {level.proof.slice(0, 2).map((item) => (
-            <div className="journey-scene-world-node" key={item.value + item.label}>
-              <div className="journey-scene-world-node-badge">{item.value}</div>
-              <span>{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+        style={{ backgroundImage: `url(${STAGE_MEDIA.world.background})` }}
+      />
     </div>
   );
 }

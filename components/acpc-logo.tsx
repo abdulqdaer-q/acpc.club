@@ -21,10 +21,10 @@ export function AcpcLogo({
 
   const dimensions =
     size === "sm"
-      ? { width: 54, height: 58 }
+      ? { width: 52, height: 52 }
       : size === "lg"
-        ? { width: 88, height: 94 }
-        : { width: 68, height: 73 };
+        ? { width: 96, height: 96 }
+        : { width: 68, height: 68 };
 
   return (
     <span className={classes}>
@@ -33,7 +33,7 @@ export function AcpcLogo({
         aria-hidden="true"
         className="acpc-logo-image"
         height={dimensions.height}
-        src="/brand/aleppo-cpc-lidia.svg"
+        src="/brand/aleppo-icpc-club-avatar.png"
         width={dimensions.width}
       />
       {subtitle ? <span className="acpc-logo-subtitle">{subtitle}</span> : null}

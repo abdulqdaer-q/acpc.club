@@ -257,6 +257,17 @@ export function HomeSlideDeck({ overlay, slides }: HomeSlideDeckProps) {
   }, [isEnabled]);
 
   useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent("acpc:home-deck-state", {
+        detail: {
+          activeIndex,
+          isEnabled
+        }
+      })
+    );
+  }, [activeIndex, isEnabled]);
+
+  useEffect(() => {
     if (!isEnabled) {
       return;
     }
