@@ -50,8 +50,9 @@ subdomain in DNS and point it at wherever that club hosts its site.
 
 ## Open items
 
-- The contact address is `hello@aleppo.icpc.club`. If you would rather use
-  `hello@icpc.club`, create that mailbox first and update `index.html`.
+- The contact address is `hello@icpc.club`, used **here only**. The club site at
+  `aleppo.icpc.club` keeps its own `hello@aleppo.icpc.club` — two inboxes, so
+  subdomain enquiries stay separate from club correspondence. Both need watching.
 - Before inviting other clubs, consider confirming with your ICPC regional
   contact that the domain being used as a multi-club host is acceptable to them.
 - Hosting other clubs' subdomains means inheriting some responsibility for what
