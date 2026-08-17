@@ -1,10 +1,37 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-import { AcpcLogo } from "@/components/acpc-logo";
 import { isLocale, pageOrder, routeSegments, type PageSlug } from "@/lib/i18n";
+
+/**
+ * Drives real cross-document morphing via the View Transitions API.
+ *
+ * globals.css already describes the whole choreography — a direction-aware
+ * shared-axis move for `page-shell`, plus morphs for `club-header-mark` and
+ * `club-hero-media` — gated behind html[data-vt="native"]. Nothing ever set that
+ * value, so those 20-odd rules never ran and navigation instead showed a
+ * hand-rolled overlay that also delayed every click by 240ms. This calls
+ * startViewTransition so the CSS does the work, and navigation starts
+ * immediately.
+ *
+ * Browsers without the API (Firefox, as of writing) get plain instant
+ * navigation, which is the correct fallback for a fully static site.
+ */
+
+type ViewTransition = {
+  ready: Promise<void>;
+  updateCallbackDone: Promise<void>;
+  finished: Promise<void>;
+};
+
+type ViewTransitionDocument = Document & {
+  startViewTransition?: (callback: () => void | Promise<void>) => ViewTransition;
+};
+
+// A slow route must never leave the captured frame on screen indefinitely.
+const COMMIT_TIMEOUT_MS = 900;
 
 function shouldHandleAnchor(anchor: HTMLAnchorElement) {
   if (anchor.target && anchor.target !== "_self") {
@@ -66,39 +93,31 @@ function getDirection(currentPath: string, nextPath: string) {
 export function RouteTransitionProvider() {
   const router = useRouter();
   const pathname = usePathname();
-  const [isMorphing, setIsMorphing] = useState(false);
-  const clearTimerRef = useRef<number | null>(null);
+  const commitRef = useRef<(() => void) | null>(null);
 
-  const clearMorph = () => {
-    if (clearTimerRef.current) {
-      window.clearTimeout(clearTimerRef.current);
-    }
-
-    clearTimerRef.current = window.setTimeout(() => {
-      setIsMorphing(false);
-      document.documentElement.dataset.morphing = "false";
-    }, 760);
-  };
-
+  // startViewTransition holds the old frame until its callback settles. Next's
+  // router.push is async, so the transition is resolved from here — once the new
+  // pathname has actually committed.
   useEffect(() => {
-    if (isMorphing) {
-      clearMorph();
-    }
+    const commit = commitRef.current;
 
-    return () => {
-      if (clearTimerRef.current) {
-        window.clearTimeout(clearTimerRef.current);
-      }
-    };
-    // The morph should complete after the routed page has committed.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (commit) {
+      commitRef.current = null;
+      commit();
+    }
   }, [pathname]);
 
   useEffect(() => {
+    const doc = document as ViewTransitionDocument;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    document.documentElement.dataset.vt = prefersReducedMotion ? "fallback" : "custom";
+    const supported = typeof doc.startViewTransition === "function";
 
-    if (prefersReducedMotion) {
+    // Gates the ::view-transition rules. "fallback" keeps the CSS entry
+    // animation on .page-transition-shell instead.
+    document.documentElement.dataset.vt =
+      supported && !prefersReducedMotion ? "native" : "fallback";
+
+    if (!supported || prefersReducedMotion) {
       return;
     }
 
@@ -134,21 +153,32 @@ export function RouteTransitionProvider() {
       }
 
       event.preventDefault();
+
+      // Read by the direction-aware shared-axis rules in globals.css.
       document.documentElement.dataset.navDirection = getDirection(currentPath, nextPath);
-      document.documentElement.style.setProperty("--morph-x", `${event.clientX}px`);
-      document.documentElement.style.setProperty("--morph-y", `${event.clientY}px`);
-      document.documentElement.dataset.morphing = "true";
-      setIsMorphing(true);
 
-      window.setTimeout(() => {
-        router.push(nextPath);
-      }, 240);
+      const transition = doc.startViewTransition!(
+        () =>
+          new Promise<void>((resolve) => {
+            const guard = window.setTimeout(resolve, COMMIT_TIMEOUT_MS);
 
-      window.setTimeout(() => {
-        document.documentElement.dataset.navDirection =
-          document.documentElement.dataset.navDirection || "forward";
-        clearMorph();
-      }, 1120);
+            commitRef.current = () => {
+              window.clearTimeout(guard);
+              resolve();
+            };
+
+            router.push(nextPath);
+          })
+      );
+
+      // Clicking a second link mid-transition skips the first one. A skipped
+      // transition rejects `ready` with InvalidStateError — `finished` still
+      // resolves, which is why catching only that one left the rejection
+      // unhandled. Being skipped is expected here, so all three are swallowed.
+      const ignore = () => {};
+      transition.ready.catch(ignore);
+      transition.updateCallbackDone.catch(ignore);
+      transition.finished.catch(ignore);
     };
 
     document.addEventListener("click", onClick, { capture: true });
@@ -158,20 +188,5 @@ export function RouteTransitionProvider() {
     };
   }, [router]);
 
-  return (
-    <div className="route-morph-layer" aria-hidden="true" data-active={isMorphing}>
-      <div className="route-morph-mark">
-        <AcpcLogo size="md" />
-      </div>
-      <svg className="route-morph-circuit" viewBox="0 0 1200 760">
-        <path d="M96 512H252V420H408V336H584" pathLength="100" />
-        <path d="M1102 208H920V304H752V424H616" pathLength="100" />
-        <path d="M180 160H356V244H496V520H828V620H1016" pathLength="100" />
-        <circle cx="96" cy="512" r="9" />
-        <circle cx="408" cy="336" r="9" />
-        <circle cx="616" cy="424" r="9" />
-        <circle cx="1016" cy="620" r="9" />
-      </svg>
-    </div>
-  );
+  return null;
 }

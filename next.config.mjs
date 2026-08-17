@@ -51,9 +51,18 @@ const nextConfig = {
     // strict alternative is a per-request nonce, which requires middleware and
     // would turn every page dynamic — undoing the fully-static build this site
     // depends on for speed. Host restrictions still block off-origin injection.
+    // next dev compiles with eval-based HMR and source maps, so a CSP without
+    // 'unsafe-eval' stops React hydrating entirely — effects never run and the
+    // page looks subtly dead. Production builds contain no eval, so the
+    // relaxation is scoped to development only.
+    const scriptSrc =
+      process.env.NODE_ENV === "development"
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+        : "script-src 'self' 'unsafe-inline'";
+
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline'",
+      scriptSrc,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self'",
