@@ -583,8 +583,8 @@ const defaults: Record<
       ],
       impactMetrics: [
         {
-          value: "3",
-          label: "documented World Finals appearances in the source archive"
+          value: "4",
+          label: "World Finals appearances documented with team photos"
         },
         {
           value: "2",
@@ -1238,8 +1238,8 @@ const defaults: Record<
       ],
       impactMetrics: [
         {
-          value: "3",
-          label: "مشاركات موثقة في النهائي العالمي ضمن الأرشيف"
+          value: "4",
+          label: "مشاركات في النهائي العالمي موثقة بصور الفرق"
         },
         {
           value: "2",
