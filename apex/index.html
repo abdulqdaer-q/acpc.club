@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>icpc.club — independent student competitive programming clubs</title>
+<meta name="description" content="A small home for independent, student-run competitive programming clubs. Currently hosting Aleppo CPC at the University of Aleppo. Not affiliated with the ICPC organization.">
+<link rel="canonical" href="https://icpc.club/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://icpc.club/">
+<meta property="og:title" content="icpc.club — independent student competitive programming clubs">
+<meta property="og:description" content="A small home for independent, student-run competitive programming clubs. Currently hosting Aleppo CPC at the University of Aleppo.">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #16191b;
+    --paper: #e7e0cf;
+    --muted: rgba(231, 224, 207, 0.62);
+    --faint: rgba(231, 224, 207, 0.38);
+    --line: rgba(231, 224, 207, 0.14);
+    --gold: #d4af37;
+    --teal: #4a9a9a;
+    --rust: #c96b2c;
+
+    --sans: "Avenir Next", Avenir, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --arabic: "Geeza Pro", "Al Bayan", "Noto Naskh Arabic", "Segoe UI", sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--paper);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  [lang="ar"] { font-family: var(--arabic); }
+
+  a { color: var(--paper); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 9vh, 6rem) clamp(1.25rem, 5vw, 2rem) 4rem;
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  /* ---- masthead ---- */
+  .dots { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1.5rem; }
+  .dots i { width: 10px; height: 10px; border-radius: 999px; }
+
+  .mark {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: clamp(2rem, 8vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .mark b { color: var(--gold); font-weight: 600; }
+
+  .lede {
+    margin: 0.9rem 0 0;
+    font-size: clamp(1.02rem, 2.4vw, 1.18rem);
+    color: var(--muted);
+    max-width: 34rem;
+  }
+  /* RTL text right-aligns inside its own box, so a narrow max-width would leave
+     it floating mid-page instead of meeting the content edge. */
+  .lede-ar { margin-top: 0.5rem; max-width: none; }
+
+  /* ---- disclaimer: the most important block on the page ---- */
+  .notice {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--rust);
+    background: var(--surface);
+    padding: 1.1rem 1.25rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .notice h2 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 600;
+  }
+  .notice p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+  /* ---- sections ---- */
+  section { display: grid; gap: 0.75rem; }
+  h3 {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    font-weight: 600;
+  }
+  section p { margin: 0; color: var(--muted); }
+
+  /* ---- club list ---- */
+  .clubs { display: grid; gap: 0.75rem; }
+  .club {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 0.9rem;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    text-decoration: none;
+  }
+  .club:hover { border-color: rgba(212, 175, 55, 0.45); }
+  .club .host { font-family: var(--mono); font-size: 0.95rem; color: var(--gold); }
+  .club .who { color: var(--muted); font-size: 0.9rem; }
+  .club .go { margin-inline-start: auto; color: var(--faint); font-family: var(--mono); font-size: 0.8rem; }
+
+  /* ---- contact ---- */
+  .mail {
+    font-family: var(--mono);
+    font-size: 1.02rem;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  }
+  .mail:hover { border-bottom-color: var(--gold); }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 1.4rem;
+    font-size: 0.8rem;
+    color: var(--faint);
+    display: grid;
+    gap: 0.4rem;
+  }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="dots" aria-hidden="true">
+        <i style="background:#c96b2c"></i>
+        <i style="background:#d4af37"></i>
+        <i style="background:#4a9a9a"></i>
+      </div>
+      <h1 class="mark">icpc<b>.club</b></h1>
+      <p class="lede">
+        A small home for independent, student-run competitive programming clubs.
+      </p>
+      <p class="lede lede-ar" lang="ar" dir="rtl">
+        مساحة مستقلة تجمع أندية طلابية للبرمجة التنافسية.
+      </p>
+    </header>
+
+    <div class="notice">
+      <h2>Not affiliated with ICPC</h2>
+      <p>
+        This domain is privately owned and operated by student volunteers. It is
+        <strong>not</strong> run by, endorsed by, or affiliated with the
+        International Collegiate Programming Contest (ICPC) organization, and it
+        does not speak for ICPC or any regional organizing body. The name refers
+        to the kind of contest these clubs train for — nothing more.
+      </p>
+      <p lang="ar" dir="rtl">
+        هذا النطاق مملوك ومُدار بصفة خاصة من متطوعين طلابيين، وليس تابعاً لمنظمة
+        ICPC الدولية ولا معتمداً منها، ولا يتحدث باسمها أو باسم أي جهة منظمة
+        إقليمية. ويشير الاسم إلى مجال المسابقة التي تتدرب هذه الأندية لها فقط.
+      </p>
+    </div>
+
+    <section>
+      <h3>Clubs here</h3>
+      <div class="clubs">
+        <a class="club" href="https://aleppo.icpc.club">
+          <span class="host">aleppo.icpc.club</span>
+          <span class="who">Aleppo CPC — University of Aleppo, Syria</span>
+          <span class="go" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h3>For other clubs</h3>
+      <p>
+        If you run a student competitive programming club at a university and want
+        a subdomain here, get in touch. There is no cost and no application form —
+        just an email describing your club, your university, and who is
+        responsible for it.
+      </p>
+      <p>
+        Hosting is offered on the understanding that each club stays responsible
+        for its own content and makes the same non-affiliation point clear on its
+        own site.
+      </p>
+      <p lang="ar" dir="rtl">
+        إن كنت تدير نادياً طلابياً للبرمجة التنافسية في جامعتك وترغب بنطاق فرعي
+        هنا، تواصل معنا برسالة تعرّف بالنادي والجامعة والمسؤول عنه. لا توجد رسوم
+        ولا استمارة تقديم.
+      </p>
+    </section>
+
+    <section>
+      <h3>Contact</h3>
+      <p>
+        <a class="mail" href="mailto:hello@aleppo.icpc.club?subject=icpc.club%20subdomain%20enquiry">hello@aleppo.icpc.club</a>
+      </p>
+    </section>
+
+    <footer>
+      <p>
+        Operated by Aleppo ICPC Club (Aleppo CPC), an independent student volunteer
+        club at the University of Aleppo, Syria.
+      </p>
+      <p lang="ar" dir="rtl">
+        يديره نادي البرمجة التنافسية في جامعة حلب، وهو نادٍ طلابي تطوعي مستقل.
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>
