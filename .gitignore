@@ -4,6 +4,10 @@
 .next-dev-reset-*
 .next-build-reset-*
 node_modules
+dist
+.claude/worktrees
 .DS_Store
 .env.local
+.env.production
 *.log
+tsconfig.tsbuildinfo

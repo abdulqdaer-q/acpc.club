@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
@@ -194,15 +195,24 @@ function MapScene({ level }: { level: JourneyLevelData }) {
   );
 }
 
+// One photo per stage, each matched to the level it depicts. Intrinsic
+// dimensions are declared per image rather than shared: next/image builds the
+// srcset from them, so a wrong ratio here means a wrongly cropped photo.
 const STAGE_MEDIA = {
   aleppo: {
-    image: "/images/acpc-photos/achievements-winners.jpg"
+    src: "/images/journey/aleppo-meeting.jpg",
+    width: 1920,
+    height: 1440
   },
   syria: {
-    image: "/images/acpc-photos/achievements-winners.jpg"
+    src: "/images/journey/syria-hall.jpg",
+    width: 1280,
+    height: 960
   },
   region: {
-    primary: "/images/icpc-teams/2023.jpg"
+    src: "/images/journey/regional-winners.jpg",
+    width: 2048,
+    height: 1536
   },
   world: {
     background: "/images/icpc-teams/2023.jpg"
@@ -215,11 +225,14 @@ function StageMedia({ level }: { level: JourneyLevelData }) {
       <div className="journey-scene-media journey-scene-media-aleppo">
         <div className="journey-scene-orbit-ring journey-scene-orbit-ring-outer" />
         <div className="journey-scene-orbit-ring journey-scene-orbit-ring-inner" />
-        <img
+        <Image
           alt=""
           className="journey-scene-image journey-scene-image-round"
           draggable="false"
-          src={STAGE_MEDIA.aleppo.image}
+          height={STAGE_MEDIA.aleppo.height}
+          sizes="(max-width: 768px) 64vw, 384px"
+          src={STAGE_MEDIA.aleppo.src}
+          width={STAGE_MEDIA.aleppo.width}
         />
         <div className="journey-scene-chip journey-scene-chip-floating">{level.levelLabel}</div>
       </div>
@@ -230,11 +243,14 @@ function StageMedia({ level }: { level: JourneyLevelData }) {
     return (
       <div className="journey-scene-media journey-scene-media-syria">
         <div className="journey-scene-bridge">
-          <img
+          <Image
             alt=""
             className="journey-scene-image journey-scene-image-bridge"
             draggable="false"
-            src={STAGE_MEDIA.syria.image}
+            height={STAGE_MEDIA.syria.height}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            src={STAGE_MEDIA.syria.src}
+            width={STAGE_MEDIA.syria.width}
           />
           <div className="journey-scene-bridge-icon">
             <span className="journey-scene-bridge-pulse" />
@@ -253,11 +269,14 @@ function StageMedia({ level }: { level: JourneyLevelData }) {
     return (
       <div className="journey-scene-media journey-scene-media-region">
         <div className="journey-scene-single">
-          <img
+          <Image
             alt=""
             className="journey-scene-image journey-scene-image-card journey-scene-image-card-wide"
             draggable="false"
-            src={STAGE_MEDIA.region.primary}
+            height={STAGE_MEDIA.region.height}
+            sizes="(max-width: 768px) 100vw, 45vw"
+            src={STAGE_MEDIA.region.src}
+            width={STAGE_MEDIA.region.width}
           />
         </div>
         <div className="journey-scene-chip-row">

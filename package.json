@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "build-namecheap": "npm run build && npm run zip-namecheap",
+    "zip-namecheap": "node scripts/zip-namecheap-deploy.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.1",
     "next": "15.5.15",
     "react": "18.3.1",
     "react-dom": "18.3.1"

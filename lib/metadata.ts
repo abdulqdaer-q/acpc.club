@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { Locale, localizedPath } from "@/lib/i18n";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://acpc.club";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aleppo.icpc.club";
 
 export function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString();
@@ -27,16 +27,7 @@ export function buildMetadata(input: {
   const pagePath = localizedPath(locale, slug);
   const canonical = absoluteUrl(pagePath);
 
-  const alternates =
-    slug === "home"
-      ? {
-          en: absoluteUrl(localizedPath("en", "home")),
-          ar: absoluteUrl(localizedPath("ar", "home"))
-        }
-      : {
-          en: absoluteUrl(localizedPath("en", slug)),
-          ar: absoluteUrl(localizedPath("ar", slug))
-        };
+  const englishUrl = absoluteUrl(localizedPath("en", slug));
 
   return {
     metadataBase: new URL(siteUrl),
@@ -45,7 +36,24 @@ export function buildMetadata(input: {
     keywords,
     alternates: {
       canonical,
-      languages: alternates
+      languages: {
+        en: englishUrl,
+        ar: absoluteUrl(localizedPath("ar", slug)),
+        // Tells crawlers which version to serve when no language matches,
+        // instead of letting them pick one at random.
+        "x-default": englishUrl
+      }
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1
+      }
     },
     openGraph: {
       type: "website",

@@ -86,28 +86,18 @@ export default async function HomePage({ params }: PageProps) {
           description:
             "The homepage should show what the club is doing now and why it is worth backing."
         };
-  const structuredData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "Aleppo CPC",
-      url: absoluteUrl(localizedPath(currentLocale, "home")),
-      description: home.seo.description,
-      areaServed: "Syria",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Aleppo",
-        addressCountry: "SY"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      name: "Aleppo CPC",
-      parentOrganization: "University of Aleppo",
-      url: absoluteUrl(localizedPath(currentLocale, "home"))
-    }
-  ];
+  // The Organization entity is emitted sitewide from the locale layout; this
+  // only describes the site itself and points back at it as publisher.
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${absoluteUrl("/")}#website`,
+    name: "Aleppo CPC",
+    url: absoluteUrl(localizedPath(currentLocale, "home")),
+    description: home.seo.description,
+    inLanguage: currentLocale === "ar" ? "ar-SY" : "en",
+    publisher: { "@id": `${absoluteUrl("/")}#organization` }
+  };
 
   return (
     <>

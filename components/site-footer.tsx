@@ -151,6 +151,14 @@ export function SiteFooter({ locale, settings }: SiteFooterProps) {
           </div>
         </div>
       </div>
+
+      <div className="shell footer-legal">
+        <p>
+          {locale === "ar"
+            ? "نادي طلابي جامعي مستقل يخدم طلبة جامعة حلب. ويشير استخدام ICPC إلى مجال المسابقة البرمجية الجامعية، ولا يعني تمثيل المنظمة الدولية أو التحدث باسمها."
+            : "An independent university student club serving University of Aleppo students. The use of “ICPC” denotes the collegiate programming contest domain and does not imply representation of, or affiliation with, the international ICPC organization."}
+        </p>
+      </div>
     </footer>
   );
 }

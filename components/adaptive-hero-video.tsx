@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import { AcpcLogo } from "@/components/acpc-logo";
 import { Locale } from "@/lib/i18n";
@@ -95,7 +96,46 @@ function BrandCircuitBackdrop({ locale }: { locale: Locale }) {
   );
 }
 
+type NetworkInformation = {
+  saveData?: boolean;
+  effectiveType?: string;
+};
+
+const SLOW_CONNECTIONS = ["slow-2g", "2g", "3g"];
+
+/**
+ * The hero video is decorative: the poster frame says the same thing for a
+ * tenth of the bytes. So we hold the video back until the client tells us the
+ * connection can carry it, and never fetch it at all under Data Saver.
+ *
+ * Browsers without the Network Information API (Safari, Firefox) fall through
+ * to loading it — refusing everywhere we cannot measure would strip the video
+ * from a large share of visitors who can comfortably afford it.
+ */
+function useAllowsHeavyMedia() {
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(() => {
+    const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+
+    if (!connection) {
+      setAllowed(true);
+      return;
+    }
+
+    if (connection.saveData) {
+      return;
+    }
+
+    setAllowed(!SLOW_CONNECTIONS.includes(connection.effectiveType ?? ""));
+  }, []);
+
+  return allowed;
+}
+
 export function AdaptiveHeroCover({ hero, locale }: AdaptiveHeroCoverProps) {
+  const allowsHeavyMedia = useAllowsHeavyMedia();
+
   return (
     <section className="hero-cover hero-cover-video-shell">
       <div className="hero-cover-media">
@@ -106,9 +146,9 @@ export function AdaptiveHeroCover({ hero, locale }: AdaptiveHeroCoverProps) {
           muted
           playsInline
           poster={HERO_VIDEO_POSTER}
-        >
-          <source src={HERO_VIDEO_SRC} type="video/mp4" />
-        </video>
+          preload={allowsHeavyMedia ? "auto" : "none"}
+          src={allowsHeavyMedia ? HERO_VIDEO_SRC : undefined}
+        />
         <BrandCircuitBackdrop locale={locale} />
       </div>
 

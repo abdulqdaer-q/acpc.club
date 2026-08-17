@@ -51,15 +51,15 @@ export default async function SponsorsPage({ params }: PageProps) {
   const sponsorProof =
     currentLocale === "ar"
       ? [
-          { value: "230", label: "مشاركاً وردوا في مواد تخطيط فعالية 2025" },
-          { value: "60-70", label: "فريقاً ذُكروا في مواد التخطيط الداخلية" },
-          { value: "100+", label: "متطوع ومساهم تشغيلي في الوثائق المرجعية" },
+          { value: "500", label: "متسابق مسجّل في مسابقة الجامعة 2026" },
+          { value: "135", label: "فريقاً في مسابقة الجامعة 2026" },
+          { value: "100", label: "متطوع في تنفيذ الفعالية" },
           { value: "4", label: "قنوات ظهور موثقة في مواد الشراكة" }
         ]
       : [
-          { value: "230", label: "participants referenced in the 2025 planning materials" },
-          { value: "60-70", label: "teams mentioned in the internal planning materials" },
-          { value: "100+", label: "volunteers and contributors documented in the reference files" },
+          { value: "500", label: "registered contestants in the 2026 university contest" },
+          { value: "135", label: "teams in the 2026 university contest" },
+          { value: "100", label: "volunteers running the event" },
           { value: "4", label: "documented sponsor-visibility channels in the partnership materials" }
         ];
 

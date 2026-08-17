@@ -55,25 +55,33 @@ export default async function AchievementsPage({ params }: PageProps) {
             year: "2016",
             title: "نهائيات العالم في فوكيت",
             description: "صورة مبكرة تؤكد حضور جامعة حلب على مسار ICPC العالمي.",
-            src: "/images/icpc-teams/2016.jpg"
+            src: "/images/icpc-teams/2016.jpg",
+            width: 2048,
+            height: 1365
           },
           {
             year: "2019",
             title: "نهائيات العالم في بورتو",
             description: "استمرارية الظهور الخارجي تثبت أن المسار ناضج ومبني على عمل تراكمي.",
-            src: "/images/icpc-teams/2019.jpg"
+            src: "/images/icpc-teams/2019.jpg",
+            width: 2048,
+            height: 1365
           },
           {
             year: "2021",
             title: "نهائيات العالم في دكا",
             description: "توضح هذه اللقطة أن النادي لا يتوقف عند التدريب المحلي، بل يصل إلى الساحة الدولية.",
-            src: "/images/icpc-teams/2021.jpg"
+            src: "/images/icpc-teams/2021.jpg",
+            width: 2000,
+            height: 1231
           },
           {
             year: "2023",
             title: "نهائيات العالم في الأقصر",
             description: "الأرشيف البصري المرتب يجعل قصة الإنجاز أوضح وأكثر إقناعاً للطلاب والشركاء.",
-            src: "/images/icpc-teams/2023.jpg"
+            src: "/images/icpc-teams/2023.jpg",
+            width: 2048,
+            height: 1365
           }
         ]
       : [
@@ -82,28 +90,36 @@ export default async function AchievementsPage({ params }: PageProps) {
             title: "World Finals in Phuket",
             description:
               "An early image that confirms the University of Aleppo's place on the global ICPC pathway.",
-            src: "/images/icpc-teams/2016.jpg"
+            src: "/images/icpc-teams/2016.jpg",
+            width: 2048,
+            height: 1365
           },
           {
             year: "2019",
             title: "World Finals in Porto",
             description:
               "Sustained international presence proves the pathway is mature and built on cumulative work.",
-            src: "/images/icpc-teams/2019.jpg"
+            src: "/images/icpc-teams/2019.jpg",
+            width: 2048,
+            height: 1365
           },
           {
             year: "2021",
             title: "World Finals in Dhaka",
             description:
               "This record shows that the club does not stop at local training. It reaches the international stage.",
-            src: "/images/icpc-teams/2021.jpg"
+            src: "/images/icpc-teams/2021.jpg",
+            width: 2000,
+            height: 1231
           },
           {
             year: "2023",
             title: "World Finals in Luxor",
             description:
               "A clear visual archive makes the achievement story more convincing to students and partners.",
-            src: "/images/icpc-teams/2023.jpg"
+            src: "/images/icpc-teams/2023.jpg",
+            width: 2048,
+            height: 1365
           }
         ];
 
@@ -144,9 +160,10 @@ export default async function AchievementsPage({ params }: PageProps) {
                 <Image
                   alt={item.title}
                   className="achievement-photo-image"
-                  height={1365}
+                  height={item.height}
+                  sizes="(max-width: 1080px) 100vw, 580px"
                   src={item.src}
-                  width={2048}
+                  width={item.width}
                 />
               </div>
               <div className="achievement-photo-copy">

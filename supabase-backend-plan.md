@@ -1,4 +1,4 @@
-# Supabase-First Backend Plan for `acpc.club`
+# Supabase-First Backend Plan for `aleppo.icpc.club`
 
 ## 1. Scope and assumptions
 

@@ -67,9 +67,9 @@ export function getJourneyContent(locale: Locale): JourneyContent {
             description:
               "كل رحلة تبدأ من هنا، في حلب، حيث يلتقي الطلاب، ويتدرّبون، ويتنافسون، ويكتشفون قوة التفكير الخوارزمي والعمل الجماعي.",
             proof: [
-              { value: "230", label: "مشاركاً في خطة فعالية 2025" },
-              { value: "60-70", label: "فريقاً في المسابقة المحلية" },
-              { value: "100+", label: "متطوع ومساهم في التشغيل" }
+              { value: "500", label: "متسابق مسجّل في مسابقة 2026" },
+              { value: "135", label: "فريقاً في مسابقة 2026" },
+              { value: "100", label: "متطوع ومنظّم" }
             ],
             side: "start",
             map: {
@@ -168,9 +168,9 @@ export function getJourneyContent(locale: Locale): JourneyContent {
             description:
               "Every journey begins here, in Aleppo, where students meet, train, compete, and discover the power of problem solving together.",
             proof: [
-              { value: "230", label: "participants in the 2025 event plan" },
-              { value: "60-70", label: "teams in the local contest plan" },
-              { value: "100+", label: "volunteers and contributors" }
+              { value: "500", label: "registered contestants in the 2026 contest" },
+              { value: "135", label: "teams in the 2026 contest" },
+              { value: "100", label: "volunteers and organizers" }
             ],
             side: "start",
             map: {

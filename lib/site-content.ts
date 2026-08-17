@@ -1,5 +1,4 @@
 import { Locale } from "@/lib/i18n";
-import { getSupabaseClient } from "@/lib/supabase";
 
 export type SeoData = {
   title: string;
@@ -142,70 +141,11 @@ export type SiteSettings = {
   };
 };
 
-type SitePageRow = {
-  slug: string;
-  locale: Locale;
-  seo_title: string | null;
-  seo_description: string | null;
-  seo_keywords: string[] | null;
-  payload: Record<string, unknown> | null;
-};
-
-type AchievementRow = {
-  year: number;
-  title_en: string;
-  title_ar: string;
-  summary_en: string;
-  summary_ar: string;
-  highlight_en: string;
-  highlight_ar: string;
-  sort_order: number;
-};
-
-type EventRow = {
-  slug: string;
-  status: string;
-  starts_at: string | null;
-  ends_at: string | null;
-  venue_en: string | null;
-  venue_ar: string | null;
-  city_en: string | null;
-  city_ar: string | null;
-  title_en: string;
-  title_ar: string;
-  summary_en: string;
-  summary_ar: string;
-  details_en: string[] | null;
-  details_ar: string[] | null;
-  sort_order: number;
-};
-
-type SettingsRow = {
-  organization_name_en: string;
-  organization_name_ar: string;
-  tagline_en: string;
-  tagline_ar: string;
-  location_en: string;
-  location_ar: string;
-  contact_label_en: string;
-  contact_label_ar: string;
-  contact_value: string;
-  whatsapp_label_en: string;
-  whatsapp_label_ar: string;
-  whatsapp_value: string;
-  email: string;
-  instagram_url: string | null;
-  linkedin_url: string | null;
-  facebook_url: string | null;
-};
-
-type SponsorRow = {
+export type SponsorItem = {
   name: string;
   tier: string;
-  website_url: string | null;
-  summary_en: string;
-  summary_ar: string;
-  sort_order: number;
+  summary: string;
+  websiteUrl?: string;
 };
 
 const defaults: Record<
@@ -221,7 +161,7 @@ const defaults: Record<
     sponsors: SponsorsPageContent;
     achievementsList: AchievementItem[];
     eventsList: EventItem[];
-    sponsorList: SponsorRow[];
+    sponsorList: SponsorItem[];
   }
 > = {
   en: {
@@ -233,7 +173,7 @@ const defaults: Record<
       contactValue: "Aleppo CPC",
       whatsappLabel: "WhatsApp",
       whatsappValue: "+971 54 700 1658",
-      email: "hello@acpc.club",
+      email: "hello@aleppo.icpc.club",
       socialLinks: {
         instagram: "https://www.instagram.com/aleppo_cpc25/",
         linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
@@ -270,16 +210,16 @@ const defaults: Record<
       },
       stats: [
         {
-          value: "230",
-          label: "participants in the 2025 event plan"
+          value: "500",
+          label: "registered contestants in the 2026 contest"
         },
         {
-          value: "60-70",
-          label: "teams in the local contest plan"
+          value: "135",
+          label: "teams in the 2026 contest"
         },
         {
-          value: "100+",
-          label: "volunteers and contributors"
+          value: "100",
+          label: "volunteers and organizers"
         }
       ],
       audiencePaths: [
@@ -455,7 +395,7 @@ const defaults: Record<
       ],
       supervisor: {
         title: "General Supervisor",
-        name: "Abdulqader Qassab",
+        name: "AbdulQader Qassab",
         responsibility: "Keeps the club aligned with its mission, university relationships, and long-term continuity.",
         linkedin: "https://www.linkedin.com/in/abdulqader-qassab"
       },
@@ -468,7 +408,7 @@ const defaults: Record<
         },
         {
           title: "Vice President",
-          name: "Abdul Karim Jamal",
+          name: "AbdulKarim Jammal",
           responsibility: "Supports execution across teams and keeps internal coordination moving."
         }
       ],
@@ -478,13 +418,13 @@ const defaults: Record<
           description: "The technical side keeps systems, contest infrastructure, and digital tools reliable.",
           roles: [
             {
-              title: "Technical Operations Director",
-              name: "Mohammad Markatli",
+              title: "Technical Systems Manager",
+              name: "Mohammad Mortakli",
               responsibility: "Owns contest machines, infrastructure readiness, and technical operating standards.",
               linkedin: "https://www.linkedin.com/in/mohamad-mazkatli-763715251/"
             },
             {
-              title: "Development Lead",
+              title: "Head of Development",
               name: "Mohammad Bitar",
               responsibility: "Builds and maintains software, website surfaces, and digital support tools.",
               linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
@@ -496,15 +436,15 @@ const defaults: Record<
           description: "Operations turns plans into an executable contest and training season.",
           roles: [
             {
-              title: "Operations Coordinator",
-              name: "Mohammad Rasoul Deryas",
+              title: "Head of Operations",
+              name: "Mohammad Rasoul Daryas",
               responsibility: "Coordinates logistics, check-in, materials, schedules, and on-ground flow.",
               linkedin: "https://www.linkedin.com/in/muhammed-rasoul-derbas-a71643283/?skipRedirect=true"
             },
             {
-              title: "Room Coordinator",
+              title: "Operations Coordinator",
               name: "Mohammad Bitar",
-              responsibility: "Prepares contest rooms, seating, hardware placement, and room-day stability.",
+              responsibility: "Handles room bookings and approvals with the university, and keeps the register of rooms and equipment assigned to the club.",
               linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
             }
           ]
@@ -514,14 +454,14 @@ const defaults: Record<
           description: "Training quality and public communication make the club credible from inside and outside.",
           roles: [
             {
-              title: "Scientific Committee Lead",
+              title: "Head of Scientific Committee",
               name: "Mohammad Ward Kayali",
               responsibility: "Leads training direction, problem practice, scientific review, and team preparation.",
               linkedin: "https://www.linkedin.com/in/mohammed-ward-kayali-496a7b357/?skipRedirect=true"
             },
             {
-              title: "Media Lead",
-              name: "Baraa Nial",
+              title: "Media Manager",
+              name: "Baraa Nayyal",
               responsibility: "Shapes coverage, announcements, visual consistency, and the public record of the club."
             }
           ]
@@ -849,6 +789,19 @@ const defaults: Record<
     ],
     eventsList: [
       {
+        slug: "aleppo-university-contest-2026",
+        title: "University Programming Contest - Aleppo 2026",
+        status: "Upcoming",
+        dateLabel: "1-2 September 2026",
+        location: "University of Aleppo",
+        summary:
+          "135 teams registered for the 2026 university contest, with roughly 500 registered contestants, up from 66 teams in 2025.",
+        details: [
+          "Team participation grew by roughly 105% against the 2025 edition.",
+          "Around 100 volunteers run the contest over two days at the University of Aleppo."
+        ]
+      },
+      {
         slug: "aleppo-university-contest-2025",
         title: "University Programming Contest - Aleppo 2025",
         status: "Archive reference",
@@ -874,7 +827,7 @@ const defaults: Record<
       contactValue: "Aleppo CPC",
       whatsappLabel: "واتساب",
       whatsappValue: "+971 54 700 1658",
-      email: "hello@acpc.club",
+      email: "hello@aleppo.icpc.club",
       socialLinks: {
         instagram: "https://www.instagram.com/aleppo_cpc25/",
         linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
@@ -912,16 +865,16 @@ const defaults: Record<
       },
       stats: [
         {
-          value: "230",
-          label: "مشارك في خطة فعالية 2025"
+          value: "500",
+          label: "متسابق مسجّل في مسابقة 2026"
         },
         {
-          value: "60-70",
-          label: "فريق في الخطة المحلية"
+          value: "135",
+          label: "فريق في مسابقة 2026"
         },
         {
-          value: "100+",
-          label: "متطوع ومساهم"
+          value: "100",
+          label: "متطوع ومنظّم"
         }
       ],
       audiencePaths: [
@@ -1120,8 +1073,8 @@ const defaults: Record<
           description: "يحافظ المسار التقني على جاهزية الأنظمة وبنية المسابقة والأدوات الرقمية.",
           roles: [
             {
-              title: "مدير العمليات التقنية",
-              name: "محمد ماركتلي",
+              title: "مدير الأنظمة التقنية",
+              name: "محمد مرتكلي",
               responsibility: "يتابع أجهزة المسابقة وجاهزية البنية التقنية ومعايير التشغيل.",
               linkedin: "https://www.linkedin.com/in/mohamad-mazkatli-763715251/"
             },
@@ -1138,15 +1091,15 @@ const defaults: Record<
           description: "تحول العمليات الخطط إلى موسم تدريبي ومسابقة قابلة للتنفيذ.",
           roles: [
             {
-              title: "منسق العمليات",
+              title: "رئيس العمليات",
               name: "محمد رسول درياس",
               responsibility: "ينسق اللوجستيك والتسجيل والمواد والجداول وحركة المشاركين.",
               linkedin: "https://www.linkedin.com/in/muhammed-rasoul-derbas-a71643283/?skipRedirect=true"
             },
             {
-              title: "منسق الغرفة",
+              title: "منسق العمليات",
               name: "محمد بيطار",
-              responsibility: "يجهز القاعات وتوزيع المقاعد والأجهزة واستقرار يوم المسابقة.",
+              responsibility: "يتابع حجوزات القاعات والموافقات الإدارية، ويحفظ سجل الغرف والتجهيزات المسجلة للنادي.",
               linkedin: "https://www.linkedin.com/in/muhammad-bitar-maatoq/?skipRedirect=true"
             }
           ]
@@ -1162,7 +1115,7 @@ const defaults: Record<
               linkedin: "https://www.linkedin.com/in/mohammed-ward-kayali-496a7b357/?skipRedirect=true"
             },
             {
-              title: "رئيس الإعلام",
+              title: "مدير الإعلام",
               name: "براء نيال",
               responsibility: "يشكل التغطية والإعلانات والاتساق البصري والسجل العام للنادي."
             }
@@ -1490,6 +1443,19 @@ const defaults: Record<
     ],
     eventsList: [
       {
+        slug: "aleppo-university-contest-2026",
+        title: "المسابقة البرمجية الجامعية - حلب 2026",
+        status: "قادمة",
+        dateLabel: "1 - 2 أيلول 2026",
+        location: "جامعة حلب",
+        summary:
+          "سجّل في مسابقة الجامعة لعام 2026 مئة وخمسة وثلاثون فريقاً، بنحو 500 متسابق مسجّل، مقارنة بـ66 فريقاً في 2025.",
+        details: [
+          "نمت مشاركة الفرق بنسبة تقارب 105% مقارنة بنسخة 2025.",
+          "ينفّذ نحو 100 متطوع المسابقة على مدى يومين في جامعة حلب."
+        ]
+      },
+      {
         slug: "aleppo-university-contest-2025",
         title: "المسابقة البرمجية الجامعية - حلب 2025",
         status: "مرجع أرشيفي",
@@ -1508,279 +1474,57 @@ const defaults: Record<
   }
 };
 
-function mergePagePayload<T extends { seo: SeoData }>(
-  fallback: T,
-  row: SitePageRow | null
-): T {
-  if (!row?.payload) {
-    return fallback;
-  }
-
-  return {
-    ...fallback,
-    ...row.payload,
-    seo: {
-      title: row.seo_title ?? fallback.seo.title,
-      description: row.seo_description ?? fallback.seo.description,
-      keywords: row.seo_keywords ?? fallback.seo.keywords
-    }
-  } as T;
-}
-
-async function getPageRow(slug: string, locale: Locale) {
-  const client = getSupabaseClient();
-
-  if (!client) {
-    return null;
-  }
-
-  const { data } = await client
-    .from("site_pages")
-    .select("slug, locale, seo_title, seo_description, seo_keywords, payload")
-    .eq("slug", slug)
-    .eq("locale", locale)
-    .eq("published", true)
-    .maybeSingle<SitePageRow>();
-
-  return data ?? null;
-}
+/**
+ * Content accessors.
+ *
+ * Everything the site renders is the bilingual data above — there is no CMS and
+ * no runtime fetch, so every page is fully static. These stay `async` because
+ * the pages `await` them, and because that is the seam a CMS would slot into
+ * later without touching a single call site.
+ */
 
 export async function getSiteSettings(locale: Locale): Promise<SiteSettings> {
-  const fallback = defaults[locale].settings;
-  const client = getSupabaseClient();
-
-  if (!client) {
-    return fallback;
-  }
-
-  const { data } = await client
-    .from("site_settings")
-    .select(
-      [
-        "organization_name_en",
-        "organization_name_ar",
-        "tagline_en",
-        "tagline_ar",
-        "location_en",
-        "location_ar",
-        "contact_label_en",
-        "contact_label_ar",
-        "contact_value",
-        "whatsapp_label_en",
-        "whatsapp_label_ar",
-        "whatsapp_value",
-        "email",
-        "instagram_url",
-        "linkedin_url",
-        "facebook_url"
-      ].join(", ")
-    )
-    .eq("is_active", true)
-    .limit(1)
-    .maybeSingle<SettingsRow>();
-
-  if (!data) {
-    return fallback;
-  }
-
-  return {
-    organizationName: locale === "ar" ? data.organization_name_ar : data.organization_name_en,
-    tagline: locale === "ar" ? data.tagline_ar : data.tagline_en,
-    location: locale === "ar" ? data.location_ar : data.location_en,
-    contactLabel: locale === "ar" ? data.contact_label_ar : data.contact_label_en,
-    contactValue: data.contact_value,
-    whatsappLabel: locale === "ar" ? data.whatsapp_label_ar : data.whatsapp_label_en,
-    whatsappValue: data.whatsapp_value,
-    email: data.email,
-    socialLinks: {
-      instagram: data.instagram_url ?? fallback.socialLinks.instagram,
-      linkedin: data.linkedin_url ?? fallback.socialLinks.linkedin,
-      facebook: data.facebook_url ?? fallback.socialLinks.facebook,
-      telegram: fallback.socialLinks.telegram
-    }
-  };
+  return defaults[locale].settings;
 }
 
 export async function getHomeContent(locale: Locale): Promise<HomeContent> {
-  return mergePagePayload(defaults[locale].home, await getPageRow("home", locale));
+  return defaults[locale].home;
 }
 
 export async function getAboutContent(locale: Locale): Promise<GenericPageContent> {
-  return mergePagePayload(defaults[locale].about, await getPageRow("about", locale));
+  return defaults[locale].about;
 }
 
 export async function getStructureContent(locale: Locale): Promise<StructurePageContent> {
-  return mergePagePayload(defaults[locale].structure, await getPageRow("structure", locale));
+  return defaults[locale].structure;
 }
 
 export async function getCompetitionContent(locale: Locale): Promise<CompetitionPageContent> {
-  return mergePagePayload(defaults[locale].competition, await getPageRow("competition", locale));
+  return defaults[locale].competition;
 }
 
 export async function getAchievementsPageContent(
   locale: Locale
 ): Promise<AchievementsPageContent> {
-  return mergePagePayload(
-    defaults[locale].achievements,
-    await getPageRow("achievements", locale)
-  );
+  return defaults[locale].achievements;
 }
 
-export async function getVolunteersPageContent(
-  locale: Locale
-): Promise<VolunteersPageContent> {
-  return mergePagePayload(defaults[locale].volunteers, await getPageRow("volunteers", locale));
+export async function getVolunteersPageContent(locale: Locale): Promise<VolunteersPageContent> {
+  return defaults[locale].volunteers;
 }
 
 export async function getSponsorsPageContent(locale: Locale): Promise<SponsorsPageContent> {
-  return mergePagePayload(defaults[locale].sponsors, await getPageRow("sponsors", locale));
+  return defaults[locale].sponsors;
 }
 
 export async function getAchievements(locale: Locale): Promise<AchievementItem[]> {
-  const fallback = defaults[locale].achievementsList;
-  const client = getSupabaseClient();
-
-  if (!client) {
-    return fallback;
-  }
-
-  const { data } = await client
-    .from("achievements")
-    .select(
-      "year, title_en, title_ar, summary_en, summary_ar, highlight_en, highlight_ar, sort_order"
-    )
-    .eq("published", true)
-    .order("sort_order", { ascending: true })
-    .order("year", { ascending: true })
-    .returns<AchievementRow[]>();
-
-  if (!data?.length) {
-    return fallback;
-  }
-
-  return data.map((item) => ({
-    year: String(item.year),
-    title: locale === "ar" ? item.title_ar : item.title_en,
-    description: locale === "ar" ? item.summary_ar : item.summary_en,
-    highlight: locale === "ar" ? item.highlight_ar : item.highlight_en
-  }));
+  return defaults[locale].achievementsList;
 }
 
 export async function getEvents(locale: Locale): Promise<EventItem[]> {
-  const fallback = defaults[locale].eventsList;
-  const client = getSupabaseClient();
-
-  if (!client) {
-    return fallback;
-  }
-
-  const { data } = await client
-    .from("events")
-    .select(
-      [
-        "slug",
-        "status",
-        "starts_at",
-        "ends_at",
-        "venue_en",
-        "venue_ar",
-        "city_en",
-        "city_ar",
-        "title_en",
-        "title_ar",
-        "summary_en",
-        "summary_ar",
-        "details_en",
-        "details_ar",
-        "sort_order"
-      ].join(", ")
-    )
-    .eq("published", true)
-    .order("sort_order", { ascending: true })
-    .returns<EventRow[]>();
-
-  if (!data?.length) {
-    return fallback;
-  }
-
-  return data.map((item) => {
-    const locationParts =
-      locale === "ar"
-        ? [item.venue_ar, item.city_ar].filter(Boolean)
-        : [item.venue_en, item.city_en].filter(Boolean);
-
-    return {
-      slug: item.slug,
-      title: locale === "ar" ? item.title_ar : item.title_en,
-      status: item.status,
-      dateLabel: formatDateLabel(item.starts_at, item.ends_at, locale),
-      location: locationParts.join(" - "),
-      summary: locale === "ar" ? item.summary_ar : item.summary_en,
-      details: locale === "ar" ? item.details_ar ?? [] : item.details_en ?? []
-    };
-  });
+  return defaults[locale].eventsList;
 }
 
-export async function getSponsors(
-  locale: Locale
-): Promise<{ name: string; tier: string; summary: string; websiteUrl?: string }[]> {
-  const fallback = defaults[locale].sponsorList;
-  const client = getSupabaseClient();
-
-  if (!client) {
-    return fallback.map((item) => ({
-      name: item.name,
-      tier: item.tier,
-      summary: locale === "ar" ? item.summary_ar : item.summary_en,
-      websiteUrl: item.website_url ?? undefined
-    }));
-  }
-
-  const { data } = await client
-    .from("sponsors")
-    .select("name, tier, website_url, summary_en, summary_ar, sort_order")
-    .eq("published", true)
-    .order("sort_order", { ascending: true })
-    .returns<SponsorRow[]>();
-
-  if (!data?.length) {
-    return fallback.map((item) => ({
-      name: item.name,
-      tier: item.tier,
-      summary: locale === "ar" ? item.summary_ar : item.summary_en,
-      websiteUrl: item.website_url ?? undefined
-    }));
-  }
-
-  return data.map((item) => ({
-    name: item.name,
-    tier: item.tier,
-    summary: locale === "ar" ? item.summary_ar : item.summary_en,
-    websiteUrl: item.website_url ?? undefined
-  }));
-}
-
-function formatDateLabel(
-  startsAt: string | null,
-  endsAt: string | null,
-  locale: Locale
-) {
-  if (!startsAt) {
-    return locale === "ar" ? "سيتم التحديث لاحقاً" : "To be updated";
-  }
-
-  const formatter = new Intl.DateTimeFormat(locale === "ar" ? "ar-SY" : "en-GB", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
-
-  const start = formatter.format(new Date(startsAt));
-
-  if (!endsAt) {
-    return start;
-  }
-
-  const end = formatter.format(new Date(endsAt));
-  return `${start} - ${end}`;
+export async function getSponsors(locale: Locale): Promise<SponsorItem[]> {
+  return defaults[locale].sponsorList;
 }
