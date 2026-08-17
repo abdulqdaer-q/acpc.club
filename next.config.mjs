@@ -41,6 +41,49 @@ const nextConfig = {
         permanent: false
       }
     ];
+  },
+  async headers() {
+    // The site loads no third-party scripts, fonts, or images, so the host
+    // allowlist can stay at 'self' throughout.
+    //
+    // script-src and style-src keep 'unsafe-inline' deliberately: Next inlines
+    // its hydration payload and next/image sets inline style attributes. The
+    // strict alternative is a per-request nonce, which requires middleware and
+    // would turn every page dynamic — undoing the fully-static build this site
+    // depends on for speed. Host restrictions still block off-origin injection.
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "font-src 'self'",
+      "media-src 'self'",
+      "connect-src 'self'",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'self'",
+      "upgrade-insecure-requests"
+    ].join("; ");
+
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: csp },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=()"
+          }
+        ]
+      }
+    ];
+    // HSTS is deliberately absent. It belongs on Apache, which terminates TLS,
+    // and setting it before AutoSSL is confirmed working would lock visitors out
+    // of a site the browser then refuses to load over http.
   }
 };
 
