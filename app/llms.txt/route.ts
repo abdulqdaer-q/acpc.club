@@ -41,7 +41,7 @@ The club connects students, contestants, alumni, trainers, and volunteers throug
 - Onsite trial contests simulating official ICPC conditions (team of three, one machine)
 - One-to-one mentoring by experienced contestants
 - Problem setting and judging for local, Syrian, and regional contests
-- Educational content and editorials, including a YouTube channel
+- Educational content and editorials, including a YouTube channel: https://www.youtube.com/@ACPC-Club
 - Volunteering for contest organization, technical operations, and media
 - Alumni and career sessions
 

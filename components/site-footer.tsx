@@ -42,6 +42,15 @@ function InstagramIcon() {
   );
 }
 
+function YouTubeIcon() {
+  return (
+    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+      <rect height="12.5" rx="3.5" stroke="currentColor" strokeWidth="1.8" width="18" x="3" y="5.75" />
+      <path d="M10.9 9.6 14.6 12l-3.7 2.4V9.6Z" fill="currentColor" />
+    </svg>
+  );
+}
+
 function LinkedInIcon() {
   return (
     <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
@@ -138,6 +147,13 @@ export function SiteFooter({ locale, settings }: SiteFooterProps) {
                   href={settings.socialLinks.linkedin}
                   icon={<LinkedInIcon />}
                   label="LinkedIn"
+                />
+              ) : null}
+              {settings.socialLinks.youtube ? (
+                <SocialIconLink
+                  href={settings.socialLinks.youtube}
+                  icon={<YouTubeIcon />}
+                  label={locale === "ar" ? "قناة يوتيوب" : "YouTube"}
                 />
               ) : null}
               {settings.socialLinks.telegram ? (

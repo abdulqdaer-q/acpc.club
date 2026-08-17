@@ -138,6 +138,7 @@ export type SiteSettings = {
     linkedin?: string;
     facebook?: string;
     telegram?: string;
+    youtube?: string;
   };
 };
 
@@ -176,8 +177,9 @@ const defaults: Record<
       email: "hello@aleppo.icpc.club",
       socialLinks: {
         instagram: "https://www.instagram.com/aleppo_cpc25/",
-        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
-        telegram: "https://t.me/+JP44405xZnIxM2Vk"
+        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-club/",
+        telegram: "https://t.me/+JP44405xZnIxM2Vk",
+        youtube: "https://www.youtube.com/@ACPC-Club"
       }
     },
     home: {
@@ -830,8 +832,9 @@ const defaults: Record<
       email: "hello@aleppo.icpc.club",
       socialLinks: {
         instagram: "https://www.instagram.com/aleppo_cpc25/",
-        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-community/?viewAsMember=true",
-        telegram: "https://t.me/+JP44405xZnIxM2Vk"
+        linkedin: "https://www.linkedin.com/company/icpc-aleppo-university-club/",
+        telegram: "https://t.me/+JP44405xZnIxM2Vk",
+        youtube: "https://www.youtube.com/@ACPC-Club"
       }
     },
     home: {

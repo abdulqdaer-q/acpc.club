@@ -18,7 +18,8 @@ export function buildOrganizationSchema(locale: Locale, settings: SiteSettings) 
     settings.socialLinks.instagram,
     settings.socialLinks.linkedin,
     settings.socialLinks.facebook,
-    settings.socialLinks.telegram
+    settings.socialLinks.telegram,
+    settings.socialLinks.youtube
   ].filter((link): link is string => Boolean(link));
 
   return {
