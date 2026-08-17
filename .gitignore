@@ -11,3 +11,4 @@ dist
 .env.production
 *.log
 tsconfig.tsbuildinfo
+carousel/out
